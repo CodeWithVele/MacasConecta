@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Negocio - MacasConecta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="main-header" style="background: linear-gradient(135deg, #28a745, #20c997);">
+        <div class="header-content">
+            <a href="index.html" style="color: white; text-decoration: none; margin-right: 15px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="header-text">
+                <h1 class="app-title">Agregar Mi Negocio</h1>
+                <p class="app-subtitle">¡Conéctate con Macas!</p>
+            </div>
+        </div>
+    </header>
+
+    <main style="padding: 20px; max-width: 800px; margin: 0 auto;">
+        <div class="tarjeta-negocio">
+            <h2 style="color: #28a745; margin-bottom: 20px; text-align: center;">
+                <i class="fas fa-store"></i> Formulario de Registro
+            </h2>
+            
+            <div style="background: #e8f5e9; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+                <h3 style="color: #1b5e20; margin-bottom: 15px;">
+                    <i class="fas fa-gift"></i> ¡OFERTA DE LANZAMIENTO!
+                </h3>
+                <p style="color: #2e7d32; font-weight: bold; font-size: 18px;">
+                    PRIMER MES COMPLETAMENTE GRATIS
+                </p>
+                <p style="color: #555; margin-top: 10px;">
+                    Luego solo <strong>$5 mensuales</strong> por visibilidad completa en MacasConecta.
+                </p>
+            </div>
+            
+            <form id="formularioNegocio" style="display: grid; gap: 20px;">
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">
+                        <i class="fas fa-signature"></i> Nombre del Negocio *
+                    </label>
+                    <input type="text" required 
+                           style="width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;"
+                           placeholder="Ej: Mi Supermercado">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">
+                        <i class="fas fa-list"></i> Categoría *
+                    </label>
+                    <select required style="width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                        <option value="">Selecciona una categoría</option>
+                        <option value="farmacia">Farmacia</option>
+                        <option value="taxi">Taxi</option>
+                        <option value="restaurante">Restaurante</option>
+                        <option value="supermercado">Supermercado</option>
+                        <option value="hotel">Hotel</option>
+                        <option value="taller">Taller Mecánico</option>
+                        <option value="electronica">Electrónica</option>
+                        <option value="otros">Otros</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">
+                        <i class="fas fa-map-marker-alt"></i> Dirección *
+                    </label>
+                    <input type="text" required 
+                           style="width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;"
+                           placeholder="Ej: Av. Amazonas, Macas Centro">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">
+                        <i class="fas fa-phone"></i> Teléfono / WhatsApp *
+                    </label>
+                    <input type="tel" required 
+                           style="width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;"
+                           placeholder="Ej: 593 99 123 4567">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">
+                        <i class="fas fa-clock"></i> Horario de Atención *
+                    </label>
+                    <input type="text" required 
+                           style="width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;"
+                           placeholder="Ej: 08:00 - 20:00 (24 horas para emergencias)">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">
+                        <i class="fas fa-align-left"></i> Descripción
+                    </label>
+                    <textarea style="width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; min-height: 100px;"
+                              placeholder="Describe tu negocio, productos o servicios..."></textarea>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                    <button type="submit" 
+                            style="background: #28a745; color: white; border: none; padding: 18px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <i class="fas fa-paper-plane"></i>
+                        ENVIAR SOLICITUD
+                    </button>
+                    
+                    <a href="index.html" 
+                       style="background: #6c757d; color: white; border: none; padding: 18px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <i class="fas fa-times"></i>
+                        CANCELAR
+                    </a>
+                </div>
+            </form>
+            
+            <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; text-align: center;">
+                <p style="color: #666; margin-bottom: 15px;">
+                    <i class="fas fa-headset"></i> ¿Necesitas ayuda?
+                </p>
+                <a href="https://wa.me/593981342236?text=Hola%20MacasConecta%2C%20necesito%20ayuda%20para%20registrar%20mi%20negocio" 
+                   target="_blank" 
+                   style="display: inline-flex; align-items: center; gap: 10px; color: #25D366; font-weight: bold; text-decoration: none;">
+                    <i class="fab fa-whatsapp"></i>
+                    Contactar soporte por WhatsApp
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <nav class="menu-inferior">
+        <a href="index.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        
+        <a href="#" class="menu-item">
+            <i class="fas fa-map"></i>
+            <span>Mapa</span>
+        </a>
+        
+        <a href="dm.html" class="menu-item">
+            <i class="fas fa-comment-dots"></i>
+            <span>DM</span>
+        </a>
+        
+        <a href="#" class="menu-item">
+            <i class="fas fa-bell"></i>
+            <span>Alertas</span>
+        </a>
+        
+        <a href="#" class="menu-item menu-activo">
+            <i class="fas fa-user"></i>
+            <span>Cuenta</span>
+        </a>
+    </nav>
+
+    <script>
+        document.getElementById('formularioNegocio').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            alert('✅ ¡Solicitud enviada exitosamente!\n\nNuestro equipo de MacasConecta se comunicará contigo en menos de 24 horas para activar tu negocio con el mes GRATIS.\n\n¡Gracias por unirte a la comunidad!');
+            
+            // Redirigir al inicio después de 2 segundos
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2500);
+        });
+    </script>
+</body>
+</html>

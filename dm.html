@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM - MacasConecta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="main-header" style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
+        <div class="header-content">
+            <a href="index.html" style="color: white; text-decoration: none; margin-right: 15px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="header-text">
+                <h1 class="app-title">Mensajes Directos</h1>
+                <p class="app-subtitle">Comunícate con negocios</p>
+            </div>
+        </div>
+    </header>
+
+    <main style="padding: 20px; min-height: 60vh;">
+        <div class="tarjeta-negocio" style="text-align: center; padding: 40px 20px;">
+            <i class="fas fa-comments" style="font-size: 60px; color: #6a11cb; margin-bottom: 20px;"></i>
+            <h2 style="color: #333; margin-bottom: 15px;">Mensajes Directos (DM)</h2>
+            <p style="color: #666; margin-bottom: 25px; line-height: 1.6;">
+                Esta funcionalidad permite a los usuarios contactar directamente con negocios registrados en MacasConecta.
+            </p>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin: 20px 0;">
+                <h3 style="color: #2575fc; margin-bottom: 15px;">💡 Cómo funciona:</h3>
+                <ul style="text-align: left; color: #555; line-height: 1.8;">
+                    <li>Envía mensajes a negocios sin salir de la app</li>
+                    <li>Recibe respuestas en tiempo real</li>
+                    <li>Consulta precios, horarios y disponibilidad</li>
+                    <li>Historial de conversaciones guardado</li>
+                </ul>
+            </div>
+            
+            <p style="color: #28a745; font-weight: bold; margin: 25px 0;">
+                <i class="fas fa-rocket"></i> Disponible en la próxima actualización
+            </p>
+            
+            <a href="index.html" class="btn-accion" style="background: #6a11cb; color: white; display: inline-flex; align-items: center; gap: 10px; padding: 12px 25px;">
+                <i class="fas fa-home"></i>
+                Volver al Inicio
+            </a>
+        </div>
+    </main>
+
+    <nav class="menu-inferior">
+        <a href="index.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        
+        <a href="#" class="menu-item">
+            <i class="fas fa-map"></i>
+            <span>Mapa</span>
+        </a>
+        
+        <a href="dm.html" class="menu-item menu-activo">
+            <i class="fas fa-comment-dots"></i>
+            <span>DM</span>
+            <span class="dm-notificacion">3</span>
+        </a>
+        
+        <a href="#" class="menu-item">
+            <i class="fas fa-bell"></i>
+            <span>Alertas</span>
+        </a>
+        
+        <a href="#" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span>Cuenta</span>
+        </a>
+    </nav>
+
+    <script>
+        // Simular notificaciones DM
+        document.querySelector('.dm-notificacion').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert('📬 Tienes 3 mensajes sin leer:\n\n1. Loccion Nelly\n2. Taxi Seguro Macas\n3. Restaurant Proaño');
+        });
+    </script>
+</body>
+</html>

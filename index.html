@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacasConecta - Tu guía local de Macas</title>
+    
+    <!-- META PWA -->
+    <meta name="theme-color" content="#28a745">
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    
+    <!-- APPLE (iOS) -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    
+    <!-- MANIFEST -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- ENCABEZADO -->
+    
+   <header class="main-header" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+    <div class="header-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%;">
+        <div class="logo-circle">
+            <span class="logo-icon">🤝</span>
+        </div>
+        <div class="header-text" style="text-align: center; width: 100%;">
+            <h1 class="app-title" style="text-align: center; width: 100%; margin: 10px 0 5px 0;">MacasConecta</h1>
+            <p class="app-subtitle" style="text-align: center; width: 100%; margin: 0;">Tu guía local de Macas</p>
+        </div>
+    </div>
+    
+    <div class="alerta-urgente" style="text-align: center; justify-content: center; width: 90%; margin-top: 15px;">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Si hay paro o cierres, revisa horarios antes de salir</span>
+    </div>
+</header>
+    <!-- BOTONES PRINCIPALES -->
+    <div class="botones-principales">
+        <a href="agregar.html" class="btn-principal btn-verde">
+            <i class="fas fa-store"></i>
+            <span>CONECTAR MI NEGOCIO</span>
+        </a>
+        
+        <a href="https://wa.me/593981342236?text=Hola%20MacasConecta" 
+           class="btn-principal btn-azul" target="_blank">
+            <i class="fas fa-headset"></i>
+            <span>SOPORTE RÁPIDO</span>
+        </a>
+    </div>
+
+    <!-- BUSCADOR -->
+    <div class="buscador-container">
+        <div class="buscador-box">
+            <i class="fas fa-search buscador-icono"></i>
+            <input type="text" 
+                   class="buscador-input" 
+                   placeholder="Ej: farmacia, gas, taxi, panadería..."
+                   id="buscadorInput">
+            <button class="buscador-boton" id="buscadorBoton">
+                <i class="fas fa-search"></i>
+                <span>Buscar</span>
+            </button>
+        </div>
+        
+        <button class="btn-categorias" id="btnCategorias">
+            <i class="fas fa-list"></i>
+            <span>Ver todas las categorías</span>
+        </button>
+    </div>
+
+    <!-- CONTADOR -->
+    <div class="contador-negocios">
+        <i class="fas fa-store contador-icono"></i>
+        <span class="contador-numero" id="contadorNumero">6</span>
+        <span class="contador-texto">negocios disponibles</span>
+    </div>
+
+    <!-- LISTA DE NEGOCIOS -->
+    <main class="lista-negocios" id="listaNegocios">
+        <!-- Los negocios aparecerán aquí vía JavaScript -->
+        <div class="cargando-negocios">
+            <div class="spinner">
+                <i class="fas fa-circle-notch"></i>
+            </div>
+            <p>Cargando negocios de Macas...</p>
+        </div>
+    </main>
+
+    <!-- SECCIÓN INGRESOS -->
+    <section class="seccion-ingresos">
+        <h2 class="ingresos-titulo">
+            <i class="fas fa-money-bill-wave"></i>
+            ¡Gana dinero con MacasConecta!
+        </h2>
+        
+        <div class="opciones-ingreso">
+            <div class="tarjeta-ingreso">
+                <div class="ingreso-icono">
+                    <i class="fas fa-store" style="color: #28a745;"></i>
+                </div>
+                <h3>Agrega tu negocio GRATIS</h3>
+                <p>Primer mes sin costo. Luego solo $5/mes por visibilidad completa.</p>
+            </div>
+            
+            <div class="tarjeta-ingreso">
+                <div class="ingreso-icono">
+                    <i class="fas fa-users" style="color: #007bff;"></i>
+                </div>
+                <h3>Recomienda y gana</h3>
+                <p>Gana $2 por cada negocio que se registre con tu código.</p>
+            </div>
+        </div>
+        
+        <div class="llamado-accion">
+            <p><strong>OFERTA DE LANZAMIENTO:</strong></p>
+            <p style="color: #dc3545; font-weight: bold; font-size: 18px;">
+                ¡PRIMER MES 100% GRATIS PARA TODOS!
+            </p>
+            <p>Hoy habla con 10 negocios, si 5 aceptan después, ganas $25 mensuales.</p>
+        </div>
+    </section>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="main-footer">
+        <div class="footer-contenido">
+            <p class="footer-derechos">© 2024 MacasConecta - Todos los derechos reservados</p>
+            <p class="footer-nota">🚨 Esta app es real y está activa en Macas</p>
+            
+            <div class="footer-compartir">
+                <p>¿Te gusta la app? ¡Compártela!</p>
+                <button class="btn-compartir" id="btnCompartir">
+                    <i class="fab fa-whatsapp"></i>
+                    Compartir por WhatsApp
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MENÚ INFERIOR -->
+    <nav class="menu-inferior">
+        <a href="index.html" class="menu-item menu-activo">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        
+        <a href="#" class="menu-item">
+            <i class="fas fa-map"></i>
+            <span>Mapa</span>
+        </a>
+        
+        <a href="dm.html" class="menu-item menu-dm">
+            <i class="fas fa-comment-dots"></i>
+            <span>DM</span>
+            <span class="dm-notificacion">3</span>
+        </a>
+        
+        <a href="#" class="menu-item">
+            <i class="fas fa-bell"></i>
+            <span>Alertas</span>
+        </a>
+        
+        <a href="#" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span>Cuenta</span>
+        </a>
+    </nav>
+
+    <!-- SCRIPTS -->
+    <script src="negocios.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
