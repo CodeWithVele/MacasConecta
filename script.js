@@ -394,8 +394,8 @@ function inicializarAplicacion() {
     console.log("🎉 MacasConecta inicializada correctamente");
     console.log("==========================================");
     console.log("💡 CONSEJO PARA GANAR DINERO:");
-    console.log("Habla con 10 negocios hoy, ofrece 1 mes GRATIS.");
-    console.log("Si 5 aceptan pagar $5 después, ganas $25 mensuales.");
+    // console.log("Habla con 10 negocios hoy, ofrece 1 mes GRATIS.");
+    // console.log("Si 5 aceptan pagar $5 después, ganas $25 mensuales.");
     console.log("==========================================");
 }
 

@@ -19,8 +19,276 @@
             </div>
         </div>
     </header>
+    <main style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    
+    <!-- HERO SECTION - BOTÓN PRINCIPAL -->
+    <div style="text-align: center; margin-bottom: 40px; padding: 30px 20px; background: linear-gradient(135deg, #f8f9ff, #eef2ff); border-radius: 20px;">
+        <i class="fas fa-comments" style="font-size: 80px; color: #6a11cb; margin-bottom: 15px;"></i>
+        <h1 style="color: #333; margin-bottom: 10px;">💬 Chatea Directo</h1>
+        <p style="color: #666; margin-bottom: 25px; font-size: 18px;">
+            Envía mensajes a negocios de Macas al instante
+        </p>
+        
+        <!-- BOTÓN GRANDE DE ACCIÓN PRINCIPAL -->
+        <button onclick="chatearConTodos()" style="
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
+            transition: all 0.3s ease;
+        " onmouseover="this.style.transform='scale(1.05)';" 
+           onmouseout="this.style.transform='scale(1)';">
+            <i class="fas fa-paper-plane" style="font-size: 24px;"></i>
+            ENVIAR MENSAJE A NEGOCIOS
+        </button>
+        
+        <p style="color: #888; font-size: 14px; margin-top: 15px;">
+            <i class="fas fa-info-circle"></i> Selecciona los negocios que quieras contactar
+        </p>
+    </div>
+    
+    <!-- SECCIÓN DE NEGOCIOS -->
+    <section style="margin-bottom: 40px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="color: #333; margin: 0;">
+                <i class="fas fa-store"></i> Negocios Disponibles
+            </h2>
+            <span id="contador-negocios" style="background: #28a745; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold;">
+                3 negocios
+            </span>
+        </div>
+        
+        <div id="lista-negocios-dm"></div>
+    </section>
+    
+    <!-- SECCIÓN RÁPIDA -->
+    <div style="background: #f8f9ff; padding: 25px; border-radius: 20px; border: 2px dashed #6a11cb;">
+        <h3 style="color: #6a11cb; margin-bottom: 15px;">
+            <i class="fas fa-bolt"></i> Acción Rápida
+        </h3>
+        <button onclick="enviarMensajePredeterminado()" style="
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            width: 100%;
+        ">
+            <i class="fas fa-question-circle"></i>
+            "¿Tienen disponibilidad ahora?"
+        </button>
+        
+        <button onclick="enviarMensajePredeterminado('precio')" style="
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            width: 100%;
+        ">
+            <i class="fas fa-tag"></i>
+            "¿Cuál es su precio?"
+        </button>
+    </div>
+</main>
 
-    <main style="padding: 20px; min-height: 60vh;">
+<script>
+// DATOS DE NEGOCIOS (deberían venir de negocios.js)
+const negocios = [
+    {
+        id: 1,
+        nombre: "Moto Servicio",
+        categoria: "Transporte",
+        telefono: "0991234567",
+        icono: "moto-icon.png",
+        mensajesPendientes: 1,
+        seleccionado: true
+    },
+    {
+        id: 2,
+        nombre: "Loccion Nelly",
+        categoria: "Belleza",
+        telefono: "0987654321",
+        icono: "nelly-icon.png",
+        mensajesPendientes: 2,
+        seleccionado: true
+    },
+    {
+        id: 3,
+        nombre: "Panadería La Esquina",
+        categoria: "Alimentos",
+        telefono: "0971234567",
+        icono: "panaderia-icon.png",
+        mensajesPendientes: 0,
+        seleccionado: false
+    }
+];
+
+// CARGAR NEGOCIOS EN LA LISTA
+function cargarNegociosDM() {
+    const contenedor = document.getElementById('lista-negocios-dm');
+    const contador = document.getElementById('contador-negocios');
+    
+    if (!contenedor) return;
+    
+    contenedor.innerHTML = '';
+    let totalSeleccionados = 0;
+    
+    negocios.forEach(negocio => {
+        totalSeleccionados += negocio.seleccionado ? 1 : 0;
+        
+        const negocioHTML = `
+            <div class="tarjeta-negocio-dm" style="
+                background: white;
+                border-radius: 15px;
+                padding: 20px;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                border-left: 6px solid ${negocio.mensajesPendientes > 0 ? '#6a11cb' : '#ccc'};
+                transition: all 0.3s ease;
+            " onmouseover="this.style.transform='translateY(-5px)';" 
+               onmouseout="this.style.transform='translateY(0)';">
+                <div style="display: flex; align-items: center; gap: 15px; flex: 1;">
+                    <input type="checkbox" 
+                           id="negocio-${negocio.id}" 
+                           ${negocio.seleccionado ? 'checked' : ''}
+                           onchange="toggleNegocio(${negocio.id})"
+                           style="width: 20px; height: 20px; cursor: pointer;">
+                    
+                    <div style="background: #f0f2ff; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-store" style="font-size: 24px; color: #6a11cb;"></i>
+                    </div>
+                    
+                    <div style="flex: 1;">
+                        <h3 style="margin: 0; color: #333; font-size: 18px;">${negocio.nombre}</h3>
+                        <p style="margin: 5px 0; color: #666; font-size: 14px;">
+                            <i class="fas fa-tag"></i> ${negocio.categoria}
+                        </p>
+                        <p style="margin: 0; color: #888; font-size: 13px;">
+                            <i class="fas fa-phone"></i> ${negocio.telefono}
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="text-align: right;">
+                    ${negocio.mensajesPendientes > 0 ? 
+                        `<span style="background: #6a11cb; color: white; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: bold;">
+                            ${negocio.mensajesPendientes} 📩
+                        </span>` : ''
+                    }
+                    
+                    <button onclick="abrirChatIndividual(${negocio.id})" style="
+                        background: #2575fc;
+                        color: white;
+                        border: none;
+                        padding: 10px 20px;
+                        border-radius: 10px;
+                        margin-top: 10px;
+                        cursor: pointer;
+                        font-weight: bold;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                    ">
+                        <i class="fas fa-comment"></i> Chatear
+                    </button>
+                </div>
+            </div>
+        `;
+        contenedor.innerHTML += negocioHTML;
+    });
+    
+    if (contador) {
+        contador.textContent = `${totalSeleccionados} negocios seleccionados`;
+        contador.style.background = totalSeleccionados > 0 ? '#28a745' : '#6c757d';
+    }
+}
+
+// FUNCIONES
+function toggleNegocio(id) {
+    const negocio = negocios.find(n => n.id === id);
+    if (negocio) {
+        negocio.seleccionado = !negocio.seleccionado;
+        cargarNegociosDM();
+    }
+}
+
+function chatearConTodos() {
+    const negociosSeleccionados = negocios.filter(n => n.seleccionado);
+    
+    if (negociosSeleccionados.length === 0) {
+        alert("⚠️ Por favor, selecciona al menos un negocio para enviar mensaje.");
+        return;
+    }
+    
+    const mensaje = prompt(`📤 Escribe tu mensaje para ${negociosSeleccionados.length} negocio(s):`, 
+                          "Hola, estoy interesado en sus servicios. ¿Podrían contactarme?");
+    
+    if (mensaje) {
+        const listaNombres = negociosSeleccionados.map(n => `• ${n.nombre}`).join('\n');
+        alert(`✅ MENSAJE ENVIADO\n\nA ${negociosSeleccionados.length} negocio(s):\n${listaNombres}\n\nEllos te contactarán pronto.`);
+        
+        // Aquí iría la lógica real de envío (API, backend, etc.)
+    }
+}
+
+function abrirChatIndividual(idNegocio) {
+    const negocio = negocios.find(n => n.id === idNegocio);
+    if (negocio) {
+        const mensaje = prompt(`💬 Escribe tu mensaje para ${negocio.nombre}:`, 
+                              `Hola ${negocio.nombre}, me gustaría saber más sobre ${negocio.categoria.toLowerCase()}.`);
+        if (mensaje) {
+            alert(`✅ Mensaje enviado a ${negocio.nombre}:\n\n"${mensaje}"\n\n📞 Te contactarán al: ${negocio.telefono}`);
+        }
+    }
+}
+
+function enviarMensajePredeterminado(tipo = 'disponibilidad') {
+    const mensajes = {
+        disponibilidad: "¿Tienen disponibilidad ahora?",
+        precio: "¿Cuál es su precio?",
+        horario: "¿Cuáles son sus horarios?"
+    };
+    
+    const mensaje = mensajes[tipo] || "Hola, me gustaría información.";
+    const negociosSeleccionados = negocios.filter(n => n.seleccionado);
+    
+    if (negociosSeleccionados.length === 0) {
+        alert("⚠️ Selecciona al menos un negocio primero.");
+        return;
+    }
+    
+    alert(`✅ "${mensaje}"\n\nEnviado a ${negociosSeleccionados.length} negocio(s).\nEllos responderán pronto.`);
+}
+
+// INICIAR
+document.addEventListener('DOMContentLoaded', cargarNegociosDM);
+</script>
+
+    <!-- <main style="padding: 20px; min-height: 60vh;">
         <div class="tarjeta-negocio" style="text-align: center; padding: 40px 20px;">
             <i class="fas fa-comments" style="font-size: 60px; color: #6a11cb; margin-bottom: 20px;"></i>
             <h2 style="color: #333; margin-bottom: 15px;">Mensajes Directos (DM)</h2>
@@ -47,7 +315,7 @@
                 Volver al Inicio
             </a>
         </div>
-    </main>
+    </main> -->
 
     <nav class="menu-inferior">
         <a href="index.html" class="menu-item">

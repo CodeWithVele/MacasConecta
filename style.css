@@ -892,3 +892,46 @@ html {
     width: 100%;
     margin-top: 10px;
 }
+
+/*😒😒😒😒😒😒😒😒😒nuevo codigo
+
+/* --- BOTÓN DM DESTACADO EN MENÚ --- */
+.menu-dm {
+    background: linear-gradient(135deg, #6a11cb, #2575fc) !important;
+    color: white !important;
+    border-radius: 50px !important;
+    padding: 12px 24px !important;
+    margin-top: -15px;
+    box-shadow: 0 6px 20px rgba(106, 17, 203, 0.4) !important;
+    position: relative;
+    transition: all 0.3s ease !important;
+}
+
+.menu-dm:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 8px 25px rgba(106, 17, 203, 0.6) !important;
+}
+
+.dm-notificacion {
+    background: #ff4757;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    border: 2px solid white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
