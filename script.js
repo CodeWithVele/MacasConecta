@@ -1,8 +1,8 @@
-// script.js - FUNCIONALIDAD COMPLETA DE MACASCONECTA
+// script.js - FUNCIONALIDAD COMPLETA DE MACASCONECTA (VERSIÓN CORREGIDA)
 console.log("🚀 Iniciando MacasConecta...");
 
 // ============================================
-// 1. FUNCIÓN PARA CREAR TARJETA DE NEGOCIO
+// 1. FUNCIÓN PARA CREAR TARJETA DE NEGOCIO (VERSIÓN CORREGIDA)
 // ============================================
 function crearTarjetaNegocio(negocio) {
     const esEmergencia = negocio.hours && negocio.hours.includes("24");
@@ -31,6 +31,9 @@ function crearTarjetaNegocio(negocio) {
         });
         tagsHTML += '</div>';
     }
+    
+    // Obtener número de mensajes pendientes para este negocio
+    const mensajesPendientes = obtenerMensajesPendientes(negocio.id) || 0;
     
     return `
         <div class="${claseTarjeta}" style="border-left-color: ${negocio.color || '#28a745'}" data-id="${negocio.id}">
@@ -102,6 +105,15 @@ function crearTarjetaNegocio(negocio) {
                     VER MAPA
                 </a>
                 ` : ''}
+                
+                <!-- NUEVO BOTÓN DM -->
+                <button class="btn-accion btn-dm" 
+                        data-id="${negocio.id}"
+                        data-nombre="${negocio.name}"
+                        data-categoria="${negocio.category}">
+                    <i class="fas fa-comment-dots"></i>
+                    ${mensajesPendientes > 0 ? `DM (${mensajesPendientes})` : 'DM'}
+                </button>
             </div>
         </div>
     `;
@@ -277,7 +289,7 @@ ${window.location.href}`;
 }
 
 // ============================================
-// 6. CONFIGURAR NAVEGACIÓN
+// 6. CONFIGURAR NAVEGACIÓN (VERSIÓN MEJORADA)
 // ============================================
 function configurarNavegacion() {
     const menuItems = document.querySelectorAll('.menu-item');
@@ -295,30 +307,49 @@ function configurarNavegacion() {
             const seccion = this.querySelector('span').textContent;
             console.log(`📍 Navegando a: ${seccion}`);
             
-            // Acciones según sección
+            // Acciones según sección (MEJORADO)
             switch(seccion.toLowerCase()) {
                 case 'inicio':
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     break;
                 case 'mapa':
-                    alert('🗺️ Mapa de negocios (próximamente)');
+                    abrirMapaNegocios();
                     break;
                 case 'dm':
-                    alert('💬 Mensajes directos (próximamente)');
+                    window.location.href = 'dm.html';
                     break;
                 case 'alertas':
-                    alert('🔔 Sistema de alertas (próximamente)');
+                    mostrarAlertas();
                     break;
                 case 'cuenta':
-                    alert('👤 Mi cuenta (próximamente)');
+                    abrirMiCuenta();
                     break;
             }
         });
     });
 }
 
+// Nueva función para abrir DM desde tarjetas
+function configurarBotonesDM() {
+    // Agregar botones DM a cada tarjeta de negocio
+    const botonesDM = document.querySelectorAll('.btn-dm');
+    
+    botonesDM.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const negocioId = this.dataset.id;
+            const negocioNombre = this.dataset.nombre;
+            
+            // Redirigir a dm.html con parámetros
+            window.location.href = `dm.html?negocio=${negocioId}&nombre=${encodeURIComponent(negocioNombre)}`;
+        });
+    });
+}
+
 // ============================================
-// 7. INICIALIZAR LA APLICACIÓN
+// 7. INICIALIZAR LA APLICACIÓN (MEJORADA)
 // ============================================
 function inicializarAplicacion() {
     console.log("⚡ Inicializando MacasConecta...");
@@ -344,10 +375,20 @@ function inicializarAplicacion() {
     
     console.log(`✅ Datos cargados: ${negocios.length} negocios`);
     
-    // 2. Mostrar negocios iniciales
+    // 2. Inicializar sistema de mensajes
+    if (typeof sistemaMensajes !== 'undefined') {
+        sistemaMensajes.actualizarNotificaciones();
+    }
+    
+    // 3. Mostrar negocios iniciales
     mostrarNegocios();
     
-    // 3. Configurar buscador
+    // 4. Configurar botones DM en las tarjetas
+    setTimeout(() => {
+        configurarBotonesDM();
+    }, 100); // Pequeño delay para asegurar que las tarjetas se crearon
+    
+    // 5. Configurar buscador
     const buscadorInput = document.getElementById('buscadorInput');
     const buscadorBoton = document.getElementById('buscadorBoton');
     
@@ -370,32 +411,42 @@ function inicializarAplicacion() {
         });
     }
     
-    // 4. Configurar botón de categorías
+    // 6. Configurar botón de categorías
     const btnCategorias = document.getElementById('btnCategorias');
     if (btnCategorias) {
         btnCategorias.addEventListener('click', mostrarCategorias);
     }
     
-    // 5. Configurar botón compartir
+    // 7. Configurar botón compartir
     const btnCompartir = document.getElementById('btnCompartir');
     if (btnCompartir) {
         btnCompartir.addEventListener('click', compartirApp);
     }
     
-    // 6. Configurar navegación
+    // 8. Configurar navegación
     configurarNavegacion();
     
-    // 7. Ocultar mensaje de carga
+    // 9. Ocultar mensaje de carga
     const cargando = document.querySelector('.cargando-negocios');
     if (cargando) {
         cargando.style.display = 'none';
     }
     
+    // 10. Crear usuario por defecto si no existe
+    if (!localStorage.getItem('usuario_macasconecta')) {
+        localStorage.setItem('usuario_macasconecta', JSON.stringify({
+            nombre: 'Usuario',
+            email: '',
+            telefono: '',
+            fechaRegistro: new Date().toISOString(),
+            negociosContactados: 0,
+            mensajesEnviados: 0
+        }));
+    }
+    
     console.log("🎉 MacasConecta inicializada correctamente");
     console.log("==========================================");
     console.log("💡 CONSEJO PARA GANAR DINERO:");
-    // console.log("Habla con 10 negocios hoy, ofrece 1 mes GRATIS.");
-    // console.log("Si 5 aceptan pagar $5 después, ganas $25 mensuales.");
     console.log("==========================================");
 }
 
@@ -425,4 +476,615 @@ window.addEventListener('error', function(e) {
     console.error('En:', e.filename, 'línea:', e.lineno);
 });
 
+// ============================================
+// 11. SISTEMA DE MENSAJES DM (NUEVO)
+// ============================================
+
+// Inicializar sistema de mensajes
+const sistemaMensajes = {
+    // Guardar mensaje
+    enviarMensaje: function(negocioId, texto, tipo = 'personalizado') {
+        const mensaje = {
+            id: Date.now(),
+            negocioId,
+            texto,
+            tipo,
+            fecha: new Date().toISOString(),
+            leido: false,
+            timestamp: new Date().toLocaleString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit',
+                day: '2-digit',
+                month: 'short'
+            })
+        };
+        
+        // Guardar en localStorage
+        const mensajes = JSON.parse(localStorage.getItem('dm_mensajes') || '[]');
+        mensajes.push(mensaje);
+        localStorage.setItem('dm_mensajes', JSON.stringify(mensajes));
+        
+        // Actualizar notificaciones
+        this.actualizarNotificaciones();
+        
+        return mensaje;
+    },
+    
+    // Obtener mensajes por negocio
+    obtenerMensajesNegocio: function(negocioId) {
+        const mensajes = JSON.parse(localStorage.getItem('dm_mensajes') || '[]');
+        return mensajes.filter(m => m.negocioId === negocioId);
+    },
+    
+    // Marcar como leído
+    marcarComoLeido: function(negocioId) {
+        const mensajes = JSON.parse(localStorage.getItem('dm_mensajes') || '[]');
+        mensajes.forEach(m => {
+            if (m.negocioId === negocioId && !m.leido) {
+                m.leido = true;
+            }
+        });
+        localStorage.setItem('dm_mensajes', JSON.stringify(mensajes));
+        this.actualizarNotificaciones();
+    },
+    
+    // Actualizar notificaciones
+    actualizarNotificaciones: function() {
+        const mensajes = JSON.parse(localStorage.getItem('dm_mensajes') || '[]');
+        const noLeidos = mensajes.filter(m => !m.leido);
+        
+        // Actualizar badge
+        const badge = document.querySelector('.dm-notificacion');
+        if (badge) {
+            if (noLeidos.length > 0) {
+                badge.textContent = noLeidos.length;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+        
+        return noLeidos.length;
+    }
+};
+
+// Función auxiliar para obtener mensajes pendientes por negocio
+function obtenerMensajesPendientes(negocioId) {
+    const mensajes = JSON.parse(localStorage.getItem('dm_mensajes') || '[]');
+    const mensajesNegocio = mensajes.filter(m => 
+        m.negocioId === negocioId && !m.leido
+    );
+    return mensajesNegocio.length;
+}
+
+// ============================================
+// 12. FUNCIONES AUXILIARES DM (NUEVO)
+// ============================================
+
+function abrirMapaNegocios() {
+    // Mapa mejorado con ubicaciones reales
+    const modalHTML = `
+        <div id="modalMapa" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        ">
+            <div style="
+                background: linear-gradient(135deg, #6a11cb, #2575fc);
+                color: white;
+                padding: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            ">
+                <h3 style="margin: 0;">
+                    <i class="fas fa-map-marked-alt"></i> Mapa de Negocios
+                </h3>
+                <button onclick="cerrarModal('modalMapa')" style="
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 24px;
+                    cursor: pointer;
+                ">×</button>
+            </div>
+            
+            <div style="flex: 1; padding: 20px; background: white;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <p style="color: #666;">
+                        <i class="fas fa-info-circle"></i>
+                        Los negocios aparecerán aquí en próximas actualizaciones
+                    </p>
+                </div>
+                
+                <div style="
+                    background: #f8f9ff;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin-bottom: 20px;
+                ">
+                    <h4 style="color: #6a11cb; margin-top: 0;">
+                        <i class="fas fa-map-pin"></i> Negocios por zona
+                    </h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                        ${negocios ? negocios.map(negocio => `
+                            <div style="
+                                background: white;
+                                padding: 15px;
+                                border-radius: 8px;
+                                border-left: 4px solid ${negocio.color || '#6a11cb'};
+                                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                            ">
+                                <h5 style="margin: 0 0 10px 0; color: #333;">${negocio.name}</h5>
+                                <p style="margin: 0 0 5px 0; color: #666; font-size: 14px;">
+                                    <i class="fas fa-map-marker-alt"></i> ${negocio.address}
+                                </p>
+                                <button onclick="abrirUbicacion('${negocio.address}')" style="
+                                    background: #2575fc;
+                                    color: white;
+                                    border: none;
+                                    padding: 8px 15px;
+                                    border-radius: 5px;
+                                    cursor: pointer;
+                                    font-size: 13px;
+                                    margin-top: 10px;
+                                ">
+                                    <i class="fas fa-directions"></i> Cómo llegar
+                                </button>
+                            </div>
+                        `).join('') : '<p>No hay negocios cargados</p>'}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+function abrirUbicacion(direccion) {
+    window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion + ', Macas, Ecuador')}`, '_blank');
+}
+
+function cerrarModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.remove();
+}
+
+function mostrarAlertas() {
+    const alertas = [
+        { tipo: 'info', mensaje: '📢 Nuevos negocios agregados esta semana', fecha: 'Hoy' },
+        { tipo: 'success', mensaje: '✅ 5 personas contactaron negocios hoy', fecha: 'Hoy' },
+        { tipo: 'warning', mensaje: '⚠️ Algunos negocios tienen horarios actualizados', fecha: 'Ayer' }
+    ];
+    
+    const modalHTML = `
+        <div id="modalAlertas" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        ">
+            <div style="
+                background: white;
+                width: 90%;
+                max-width: 400px;
+                border-radius: 15px;
+                overflow: hidden;
+            ">
+                <div style="
+                    background: linear-gradient(135deg, #ff9500, #ff5e3a);
+                    color: white;
+                    padding: 20px;
+                    text-align: center;
+                ">
+                    <h3 style="margin: 0;">
+                        <i class="fas fa-bell"></i> Alertas
+                    </h3>
+                </div>
+                
+                <div style="padding: 20px; max-height: 400px; overflow-y: auto;">
+                    ${alertas.map(alerta => `
+                        <div style="
+                            background: ${alerta.tipo === 'info' ? '#e3f2fd' : alerta.tipo === 'success' ? '#e8f5e9' : '#fff3e0'};
+                            border-left: 4px solid ${alerta.tipo === 'info' ? '#2196f3' : alerta.tipo === 'success' ? '#4caf50' : '#ff9800'};
+                            padding: 15px;
+                            margin-bottom: 10px;
+                            border-radius: 0 8px 8px 0;
+                        ">
+                            <div>${alerta.mensaje}</div>
+                            <div style="
+                                font-size: 12px;
+                                color: #888;
+                                text-align: right;
+                                margin-top: 5px;
+                            ">${alerta.fecha}</div>
+                        </div>
+                    `).join('')}
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button onclick="cerrarModal('modalAlertas')" style="
+                            background: #6a11cb;
+                            color: white;
+                            border: none;
+                            padding: 12px 30px;
+                            border-radius: 25px;
+                            cursor: pointer;
+                            font-weight: bold;
+                        ">
+                            <i class="fas fa-check"></i> Entendido
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+function abrirMiCuenta() {
+    const usuario = JSON.parse(localStorage.getItem('usuario_macasconecta')) || {
+        nombre: 'Usuario',
+        email: '',
+        telefono: '',
+        fechaRegistro: new Date().toISOString()
+    };
+    
+    const modalHTML = `
+        <div id="modalCuenta" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        ">
+            <div style="
+                background: white;
+                width: 90%;
+                max-width: 400px;
+                border-radius: 15px;
+                overflow: hidden;
+            ">
+                <div style="
+                    background: linear-gradient(135deg, #6a11cb, #2575fc);
+                    color: white;
+                    padding: 30px 20px;
+                    text-align: center;
+                ">
+                    <div style="
+                        width: 80px;
+                        height: 80px;
+                        background: rgba(255,255,255,0.2);
+                        border-radius: 50%;
+                        margin: 0 auto 15px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 32px;
+                    ">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 style="margin: 0 0 5px 0;">${usuario.nombre}</h3>
+                    <p style="margin: 0; opacity: 0.9;">Miembro desde ${new Date(usuario.fechaRegistro).toLocaleDateString('es-ES')}</p>
+                </div>
+                
+                <div style="padding: 20px;">
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #6a11cb; margin-top: 0;">
+                            <i class="fas fa-chart-line"></i> Mi Actividad
+                        </h4>
+                        <p>Negocios contactados: <strong>${usuario.negociosContactados || 0}</strong></p>
+                        <p>Mensajes enviados: <strong>${usuario.mensajesEnviados || 0}</strong></p>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #6a11cb; margin-top: 0;">
+                            <i class="fas fa-cog"></i> Configuración
+                        </h4>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <button onclick="editarPerfil()" style="
+                                background: #f0f2ff;
+                                border: 2px solid #6a11cb;
+                                color: #6a11cb;
+                                padding: 10px;
+                                border-radius: 8px;
+                                cursor: pointer;
+                                font-weight: bold;
+                            ">
+                                <i class="fas fa-user-edit"></i> Editar perfil
+                            </button>
+                            
+                            <button onclick="cerrarSesion()" style="
+                                background: #fff0f0;
+                                border: 2px solid #ff4757;
+                                color: #ff4757;
+                                padding: 10px;
+                                border-radius: 8px;
+                                cursor: pointer;
+                                font-weight: bold;
+                            ">
+                                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button onclick="cerrarModal('modalCuenta')" style="
+                            background: #6a11cb;
+                            color: white;
+                            border: none;
+                            padding: 12px 30px;
+                            border-radius: 25px;
+                            cursor: pointer;
+                            font-weight: bold;
+                        ">
+                            <i class="fas fa-times"></i> Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+function editarPerfil() {
+    const usuario = JSON.parse(localStorage.getItem('usuario_macasconecta')) || {
+        nombre: 'Usuario',
+        email: '',
+        telefono: ''
+    };
+    
+    const nuevoNombre = prompt('Ingresa tu nombre:', usuario.nombre);
+    if (nuevoNombre) {
+        usuario.nombre = nuevoNombre;
+        localStorage.setItem('usuario_macasconecta', JSON.stringify(usuario));
+        cerrarModal('modalCuenta');
+        abrirMiCuenta(); // Recargar modal
+        mostrarToast('✅ Perfil actualizado', 'success');
+    }
+}
+
+function cerrarSesion() {
+    if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+        // Aquí podrías limpiar datos de sesión si los hubiera
+        cerrarModal('modalCuenta');
+        mostrarToast('👋 Sesión cerrada', 'info');
+    }
+}
+
+// Función de toast (notificación)
+function mostrarToast(mensaje, tipo = 'info') {
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${tipo === 'success' ? '#4CAF50' : tipo === 'warning' ? '#FF9800' : tipo === 'error' ? '#FF4757' : '#2196F3'};
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        z-index: 1002;
+        animation: slideIn 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        max-width: 400px;
+    `;
+    
+    const icon = tipo === 'success' ? '✅' : tipo === 'warning' ? '⚠️' : tipo === 'error' ? '❌' : 'ℹ️';
+    toast.innerHTML = `${icon} ${mensaje}`;
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Agregar estilos CSS para las animaciones
+const estiloAnimaciones = document.createElement('style');
+estiloAnimaciones.textContent = `
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+`;
+document.head.appendChild(estiloAnimaciones);
+
+// Hacer funciones disponibles globalmente
+window.abrirMapaNegocios = abrirMapaNegocios;
+window.mostrarAlertas = mostrarAlertas;
+window.abrirMiCuenta = abrirMiCuenta;
+window.editarPerfil = editarPerfil;
+window.cerrarSesion = cerrarSesion;
+window.mostrarToast = mostrarToast;
+window.obtenerMensajesPendientes = obtenerMensajesPendientes;
+window.cerrarModal = cerrarModal;
+window.abrirUbicacion = abrirUbicacion;
+
 console.log("✅ script.js cargado y listo");
+
+//🥑🥑🥑🥑🥑🥑🥑
+// ============================================
+// SOLUCIÓN DEFINITIVA PARA BOTÓN DM
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        console.log("🚀 CONFIGURANDO BOTONES DM DEFINITIVAMENTE...");
+        
+        // 1. Asegurar que todos los botones DM tengan los atributos correctos
+        document.querySelectorAll('.tarjeta-negocio').forEach((tarjeta, index) => {
+            const botonesAccion = tarjeta.querySelector('.botones-accion');
+            const nombreNegocio = tarjeta.querySelector('.nombre-negocio')?.textContent || `Negocio ${index + 1}`;
+            const idNegocio = tarjeta.getAttribute('data-id') || (index + 1);
+            
+            if (botonesAccion) {
+                // Verificar si ya existe botón DM
+                let botonDM = botonesAccion.querySelector('.btn-dm');
+                
+                if (!botonDM) {
+                    // Crear botón DM si no existe
+                    botonDM = document.createElement('button');
+                    botonDM.className = 'btn-accion btn-dm';
+                    botonDM.innerHTML = '<i class="fas fa-comment-dots"></i> DM';
+                    botonesAccion.appendChild(botonDM);
+                    console.log(`✅ Botón DM creado para: ${nombreNegocio}`);
+                }
+                
+                // Asegurar atributos
+                botonDM.setAttribute('data-id', idNegocio);
+                botonDM.setAttribute('data-nombre', nombreNegocio);
+                botonDM.setAttribute('data-categoria', 'Negocio');
+                
+                // Remover eventos anteriores
+                const nuevoBoton = botonDM.cloneNode(true);
+                botonDM.parentNode.replaceChild(nuevoBoton, botonDM);
+                
+                // Configurar evento CLICK correctamente
+                nuevoBoton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const negocioId = this.getAttribute('data-id');
+                    const negocioNombre = this.getAttribute('data-nombre');
+                    
+                    console.log(`📤 Redirigiendo a DM con: ${negocioNombre} (ID: ${negocioId})`);
+                    alert(`Redirigiendo a chat con: ${negocioNombre}`); // Para depuración
+                    
+                    // REDIRECCIÓN CORRECTA
+                    window.location.href = `dm.html?negocio=${negocioId}&nombre=${encodeURIComponent(negocioNombre)}`;
+                });
+                
+                // También agregar estilo inline por si acaso
+                nuevoBoton.style.cssText = `
+                    background: linear-gradient(135deg, #6a11cb, #2575fc);
+                    color: white;
+                    border: none;
+                    padding: 12px 20px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    text-decoration: none;
+                    margin: 5px;
+                `;
+            }
+        });
+        
+        console.log(`✅ Configurados ${document.querySelectorAll('.btn-dm').length} botones DM`);
+        
+        // 2. Verificar que dm.html existe
+        fetch('dm.html')
+            .then(response => {
+                if (response.ok) {
+                    console.log("✅ dm.html existe y es accesible");
+                } else {
+                    console.error("❌ dm.html NO existe o hay error");
+                    alert("Error: El archivo dm.html no se encuentra. Verifica que exista en la carpeta.");
+                }
+            })
+            .catch(error => {
+                console.error("❌ Error accediendo a dm.html:", error);
+            });
+            
+    }, 1500); // Esperar 1.5 segundos
+});
+
+// ============================================
+// MEJORAS PARA SISTEMA DM
+// ============================================
+
+// Solo se ejecuta si estamos en dm.html
+if (window.location.pathname.includes('dm.html')) {
+    console.log("🔧 Aplicando mejoras para dm.html");
+    
+    // 1. Sistema de persistencia de selecciones
+    const dmMejoras = {
+        guardarSelecciones: function() {
+            const selecciones = [];
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                if (checkbox.checked && checkbox.id.includes('negocio-')) {
+                    selecciones.push(checkbox.id);
+                }
+            });
+            localStorage.setItem('dm_selecciones', JSON.stringify(selecciones));
+            console.log(`💾 Selecciones guardadas: ${selecciones.length}`);
+        },
+        
+        cargarSelecciones: function() {
+            const guardadas = JSON.parse(localStorage.getItem('dm_selecciones') || '[]');
+            console.log(`📂 Cargando ${guardadas.length} selecciones`);
+            
+            guardadas.forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) checkbox.checked = true;
+            });
+            
+            // Actualizar contador si existe la función
+            if (typeof cargarNegociosDM === 'function') {
+                setTimeout(() => cargarNegociosDM(), 100);
+            }
+        },
+        
+        actualizarBadge: function() {
+            const mensajes = JSON.parse(localStorage.getItem('dm_mensajes') || '[]');
+            const noLeidos = mensajes.filter(m => !m.leido).length;
+            
+            const badge = document.querySelector('#contador-negocios');
+            if (badge && noLeidos > 0) {
+                badge.innerHTML = `${noLeidos} 📩`;
+                badge.style.background = '#ff4757';
+            }
+            
+            return noLeidos;
+        }
+    };
+    
+    // Configurar cuando el DOM esté listo
+    setTimeout(() => {
+        // Cargar selecciones guardadas
+        dmMejoras.cargarSelecciones();
+        
+        // Guardar automáticamente cuando cambien checkboxes
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'checkbox') {
+                dmMejoras.guardarSelecciones();
+            }
+        });
+        
+        // Actualizar badge periódicamente
+        setInterval(() => dmMejoras.actualizarBadge(), 5000);
+        dmMejoras.actualizarBadge(); // Primera vez
+        
+        console.log("✅ Mejoras DM aplicadas correctamente");
+    }, 1000);
+}

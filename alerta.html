@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alertas - MacasConecta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Verificar acceso -->
+    <script src="auth.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (!verificarAcceso('alertas')) {
+            alert('🔒 Necesitas acceso para ver Alertas');
+            window.location.href = 'index.html';
+        }
+    });
+    </script>
+    
+    <header class="main-header" style="background: linear-gradient(135deg, #ff9800, #ff5722);">
+        <div class="header-content">
+            <a href="index.html" style="color: white; text-decoration: none; margin-right: 15px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="header-text">
+                <h1 class="app-title">Alertas</h1>
+                <p class="app-subtitle">Información importante de Macas</p>
+            </div>
+        </div>
+    </header>
+    
+    <main style="padding: 20px; max-width: 800px; margin: 0 auto; padding-bottom: 100px;">
+        
+        <!-- ESTADO GENERAL -->
+        <div style="text-align: center; margin-bottom: 40px; padding: 30px 20px; background: linear-gradient(135deg, #fff8e1, #ffecb3); border-radius: 20px; border: 2px solid #ff9800;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 80px; color: #ff9800; margin-bottom: 15px;"></i>
+            <h2 style="color: #333; margin-bottom: 10px;">Estado de Macas</h2>
+            <div style="background: white; padding: 15px; border-radius: 15px; display: inline-block; margin-top: 15px;">
+                <span style="color: #28a745; font-weight: bold; font-size: 20px;">
+                    <i class="fas fa-check-circle"></i> NORMAL
+                </span>
+                <p style="color: #666; margin: 10px 0 0;">Todo funciona con normalidad</p>
+            </div>
+        </div>
+        
+        <!-- ALERTAS ACTIVAS -->
+        <div style="margin-bottom: 40px;">
+            <h3 style="color: #333; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-bell" style="color: #ff9800;"></i> Alertas Activas
+            </h3>
+            
+            <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                
+                <!-- ALERTA 1 -->
+                <div style="padding: 20px; border-bottom: 1px solid #eee; background: #fff8e1;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h4 style="margin: 0; color: #333; display: flex; align-items: center; gap: 10px;">
+                                <span style="background: #ff9800; color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px;">
+                                    TRANSPORTE
+                                </span>
+                                Retrasos en transporte
+                            </h4>
+                            <p style="color: #666; margin: 10px 0; font-size: 14px;">
+                                <i class="fas fa-clock"></i> Publicado: Hoy 10:30 AM
+                            </p>
+                            <p style="margin: 0;">
+                                Debido a trabajos en la vía Macas-Puyo, hay retrasos de 15-20 minutos en el transporte urbano.
+                            </p>
+                        </div>
+                        <span style="color: #ff9800; font-size: 24px;">⚠️</span>
+                    </div>
+                </div>
+                
+                <!-- ALERTA 2 -->
+                <div style="padding: 20px; border-bottom: 1px solid #eee;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h4 style="margin: 0; color: #333; display: flex; align-items: center; gap: 10px;">
+                                <span style="background: #28a745; color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px;">
+                                    SERVICIOS
+                                </span>
+                                Farmacias 24 horas
+                            </h4>
+                            <p style="color: #666; margin: 10px 0; font-size: 14px;">
+                                <i class="fas fa-clock"></i> Publicado: Ayer 8:45 PM
+                            </p>
+                            <p style="margin: 0;">
+                                Farmacia "San José" en el centro atiende 24 horas. Teléfono: 099-XXX-XXXX
+                            </p>
+                        </div>
+                        <span style="color: #28a745; font-size: 24px;">💊</span>
+                    </div>
+                </div>
+                
+                <!-- ALERTA 3 -->
+                <div style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h4 style="margin: 0; color: #333; display: flex; align-items: center; gap: 10px;">
+                                <span style="background: #6a11cb; color: white; padding: 5px 10px; border-radius: 20px; font-size: 12px;">
+                                    EVENTO
+                                </span>
+                                Feria municipal
+                            </h4>
+                            <p style="color: #666; margin: 10px 0; font-size: 14px;">
+                                <i class="fas fa-clock"></i> Publicado: 5 ene, 9:00 AM
+                            </p>
+                            <p style="margin: 0;">
+                                Este sábado feria de productos locales en el parque central. De 8:00 AM a 2:00 PM.
+                            </p>
+                        </div>
+                        <span style="color: #6a11cb; font-size: 24px;">🎪</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SUSCRIPCIONES -->
+        <div style="background: #f8f9ff; padding: 25px; border-radius: 20px; margin-bottom: 30px;">
+            <h3 style="color: #333; margin-bottom: 20px;">
+                <i class="fas fa-bell"></i> Tipo de Alertas que Recibes
+            </h3>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="width: 18px; height: 18px;">
+                    <span style="color: #333;">Transporte y movilidad</span>
+                </label>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="width: 18px; height: 18px;">
+                    <span style="color: #333;">Servicios de salud</span>
+                </label>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" checked style="width: 18px; height: 18px;">
+                    <span style="color: #333;">Eventos locales</span>
+                </label>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" style="width: 18px; height: 18px;">
+                    <span style="color: #333;">Noticias municipales</span>
+                </label>
+            </div>
+            
+            <button style="
+                background: #ff9800;
+                color: white;
+                border: none;
+                padding: 15px;
+                border-radius: 10px;
+                width: 100%;
+                font-size: 16px;
+                cursor: pointer;
+                margin-top: 15px;
+            ">
+                <i class="fas fa-save"></i> Actualizar Suscripciones
+            </button>
+        </div>
+        
+    </main>
+    
+    <!-- MENÚ INFERIOR -->
+    <nav class="menu-inferior">
+        <a href="index.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        
+        <a href="mapa.html" class="menu-item">
+            <i class="fas fa-map"></i>
+            <span>Mapa</span>
+        </a>
+        
+        <a href="javascript:void(0)" onclick="accederDM()" class="menu-item">
+            <i class="fas fa-comment-dots"></i>
+            <span>DM</span>
+            <span id="dm-icono" class="dm-notificacion">🔒</span>
+        </a>
+        
+        <a href="javascript:void(0)" onclick="accederAlertas()" class="menu-item menu-activo">
+            <i class="fas fa-bell"></i>
+            <span>Alertas</span>
+            <span id="alertas-icono" style="color: #28a745; font-size: 10px;">🔔</span>
+        </a>
+        
+        <a href="javascript:void(0)" onclick="accederCuenta()" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span>Cuenta</span>
+            <span id="cuenta-icono" style="color: #6a11cb; font-size: 10px;">🔒</span>
+        </a>
+    </nav>
+    
+    <script>
+    // Funciones de navegación
+    function accederDM() {
+        if (verificarAcceso('dm')) {
+            document.getElementById('dm-icono').textContent = '💬';
+            document.getElementById('dm-icono').style.background = '#6a11cb';
+            window.location.href = 'dm.html';
+        }
+    }
+    
+    function accederAlertas() {
+        if (verificarAcceso('alertas')) {
+            document.getElementById('alertas-icono').textContent = '🔔';
+            document.getElementById('alertas-icono').style.color = '#28a745';
+            window.location.href = 'alertas.html';
+        }
+    }
+    
+    function accederCuenta() {
+        if (verificarAcceso('cuenta')) {
+            document.getElementById('cuenta-icono').textContent = '👤';
+            document.getElementById('cuenta-icono').style.color = '#28a745';
+            window.location.href = 'cuenta.html';
+        }
+    }
+    
+    // Actualizar íconos
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('permiso_dm') === 'true') {
+            document.getElementById('dm-icono').textContent = '💬';
+            document.getElementById('dm-icono').style.background = '#6a11cb';
+        }
+        
+        if (localStorage.getItem('permiso_cuenta') === 'true') {
+            document.getElementById('cuenta-icono').textContent = '👤';
+            document.getElementById('cuenta-icono').style.color = '#28a745';
+        }
+    });
+    </script>
+</body>
+</html>

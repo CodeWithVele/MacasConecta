@@ -76,7 +76,6 @@
             </button>
         </div>
         
-        <button class="btn-categorias" id="btnCategorias">
             <i class="fas fa-list"></i>
             <span>Ver todas las categorías</span>
         </button>
@@ -150,37 +149,94 @@
         </div>
     </footer>
 
-    <!-- MENÚ INFERIOR -->
-    <nav class="menu-inferior">
-    <a href="index.html" class="menu-item">
+   
+
+       <!-- SCRIPTS -->
+    <script src="negocios.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- SISTEMA DE NOTIFICACIONES DM -->
+    <script>
+    // Sistema de notificaciones DM en tiempo real
+    function actualizarNotificacionesDM() {
+        try {
+            // Obtener mensajes de localStorage
+            const mensajes = JSON.parse(localStorage.getItem('dm_mensajes') || '[]');
+            const noLeidos = mensajes.filter(m => !m.leido).length;
+            
+            // Buscar el badge
+            const badge = document.getElementById('dm-badge');
+            
+            if (badge) {
+                if (noLeidos > 0) {
+                    // Mostrar número de notificaciones
+                    badge.textContent = noLeidos;
+                    badge.style.display = 'flex';
+                    badge.style.animation = 'pulse 2s infinite';
+                } else {
+                    // Ocultar si no hay notificaciones
+                    badge.textContent = '';
+                    badge.style.display = 'none';
+                }
+                console.log(`📬 Notificaciones DM: ${noLeidos} no leídos`);
+            }
+        } catch (error) {
+            console.log("ℹ️ No hay mensajes DM aún");
+        }
+    }
+    
+    // Actualizar cada 5 segundos
+    setInterval(actualizarNotificacionesDM, 5000);
+    
+    // Primera actualización
+    setTimeout(actualizarNotificacionesDM, 2000);
+    
+    // Agregar animación CSS si no existe
+    if (!document.querySelector('#animacion-pulse')) {
+        const style = document.createElement('style');
+        style.id = 'animacion-pulse';
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.1); opacity: 0.8; }
+                100% { transform: scale(1); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    console.log("✅ Sistema de notificaciones DM cargado");
+    </script>
+      <!-- MENÚ INFERIOR -->
+<nav class="menu-inferior">
+    <a href="index.html" class="menu-item menu-activo">
         <i class="fas fa-home"></i>
         <span>Inicio</span>
     </a>
     
-    <a href="#" class="menu-item">
+    <a href="mapa.html" class="menu-item">
         <i class="fas fa-map"></i>
         <span>Mapa</span>
     </a>
     
-    <a href="dm.html" class="menu-item menu-dm menu-activo">
+    <a href="dm.html" class="menu-item">
         <i class="fas fa-comment-dots"></i>
         <span>DM</span>
         <span class="dm-notificacion">3</span>
     </a>
     
-    <a href="#" class="menu-item">
+    <a href="alertas.html" class="menu-item">
         <i class="fas fa-bell"></i>
         <span>Alertas</span>
     </a>
     
-    <a href="#" class="menu-item">
+    <a href="cuenta.html" class="menu-item">
         <i class="fas fa-user"></i>
         <span>Cuenta</span>
     </a>
 </nav>
-
-    <!-- SCRIPTS -->
-    <script src="negocios.js"></script>
-    <script src="script.js"></script>
 </body>
-</html>
+  
+</body>
+</body>
+

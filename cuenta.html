@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta - MacasConecta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cargar sistema de autenticación -->
+    <script src="auth.js"></script>
+    <script>
+    // Verificar acceso a esta página
+    document.addEventListener('DOMContentLoaded', function() {
+        if (!verificarAcceso('cuenta')) {
+            // Si no tiene acceso, redirigir al inicio
+            alert('🔒 Necesitas acceso para ver Mi Cuenta');
+            window.location.href = 'index.html';
+        }
+    });
+    </script>
+    
+    <!-- HEADER -->
+    <header class="main-header" style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
+        <div class="header-content">
+            <a href="index.html" style="color: white; text-decoration: none; margin-right: 15px;">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="header-text">
+                <h1 class="app-title">Mi Cuenta</h1>
+                <p class="app-subtitle">Administra tu perfil y accesos</p>
+            </div>
+        </div>
+    </header>
+    
+    <!-- CONTENIDO PRINCIPAL -->
+    <main style="padding: 20px; max-width: 800px; margin: 0 auto; padding-bottom: 100px;">
+        
+        <!-- PERFIL DE USUARIO -->
+        <div style="text-align: center; margin-bottom: 40px; padding: 30px 20px; background: linear-gradient(135deg, #f8f9ff, #eef2ff); border-radius: 20px;">
+            <i class="fas fa-user-circle" style="font-size: 80px; color: #6a11cb; margin-bottom: 15px;"></i>
+            <h2 style="color: #333; margin-bottom: 10px;">Usuario de MacasConecta</h2>
+            <p style="color: #666; margin-bottom: 20px;">
+                <i class="fas fa-map-marker-alt"></i> Macas, Ecuador
+            </p>
+            
+            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <div style="background: white; padding: 15px; border-radius: 10px; min-width: 120px;">
+                    <div style="color: #6a11cb; font-weight: bold; font-size: 24px;">3</div>
+                    <div style="color: #666; font-size: 14px;">Negocios</div>
+                </div>
+                
+                <div style="background: white; padding: 15px; border-radius: 10px; min-width: 120px;">
+                    <div style="color: #6a11cb; font-weight: bold; font-size: 24px;">12</div>
+                    <div style="color: #666; font-size: 14px;">Mensajes</div>
+                </div>
+                
+                <div style="background: white; padding: 15px; border-radius: 10px; min-width: 120px;">
+                    <div style="color: #6a11cb; font-weight: bold; font-size: 24px;">5</div>
+                    <div style="color: #666; font-size: 14px;">Alertas</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PANEL DE CONTROL DE ACCESOS -->
+        <div style="background: #f8f9ff; padding: 25px; border-radius: 20px; border: 2px solid #6a11cb; margin-bottom: 30px;">
+            <h3 style="color: #6a11cb; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-key"></i> Control de Accesos
+            </h3>
+            <p style="color: #666; margin-bottom: 20px; font-size: 14px;">
+                Gestiona los permisos de cada sección privada. Puedes cerrar sesión individualmente.
+            </p>
+            
+            <!-- LISTA DE ACCESOS -->
+            <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                
+                <!-- ACCESO DM -->
+                <div style="padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="background: #f0f2ff; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-comment-dots" style="font-size: 24px; color: #6a11cb;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: #333;">Mensajes Directos</h4>
+                            <p style="margin: 5px 0 0; color: #666; font-size: 14px;">Chat privado con negocios</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div id="estado-dm" style="color: #28a745; font-weight: bold; margin-bottom: 10px;">
+                            ✅ Conectado
+                        </div>
+                        <button onclick="cerrarSesion('dm')" style="
+                            background: #ff4757;
+                            color: white;
+                            border: none;
+                            padding: 10px 20px;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            cursor: pointer;
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 8px;
+                        ">
+                            <i class="fas fa-lock"></i> Cerrar Sesión DM
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- ACCESO ALERTAS -->
+                <div style="padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="background: #fff8e1; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-bell" style="font-size: 24px; color: #ff9800;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: #333;">Alertas</h4>
+                            <p style="margin: 5px 0 0; color: #666; font-size: 14px;">Notificaciones importantes</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div id="estado-alertas" style="color: #28a745; font-weight: bold; margin-bottom: 10px;">
+                            ✅ Conectado
+                        </div>
+                        <button onclick="cerrarSesion('alertas')" style="
+                            background: #ff9800;
+                            color: white;
+                            border: none;
+                            padding: 10px 20px;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            cursor: pointer;
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 8px;
+                        ">
+                            <i class="fas fa-lock"></i> Cerrar Sesión Alertas
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- ACCESO CUENTA -->
+                <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="background: #e7f3ff; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-user" style="font-size: 24px; color: #2575fc;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin: 0; color: #333;">Mi Cuenta</h4>
+                            <p style="margin: 5px 0 0; color: #666; font-size: 14px;">Perfil y configuración</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div id="estado-cuenta" style="color: #28a745; font-weight: bold; margin-bottom: 10px;">
+                            ✅ Conectado
+                        </div>
+                        <button onclick="cerrarSesion('cuenta')" style="
+                            background: #2575fc;
+                            color: white;
+                            border: none;
+                            padding: 10px 20px;
+                            border-radius: 8px;
+                            font-size: 14px;
+                            cursor: pointer;
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 8px;
+                        ">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión Total
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BOTÓN CERRAR TODO -->
+            <div style="text-align: center; margin-top: 25px;">
+                <button onclick="cerrarTodasLasSesiones()" style="
+                    background: #333;
+                    color: white;
+                    border: none;
+                    padding: 15px 30px;
+                    border-radius: 10px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 10px;
+                ">
+                    <i class="fas fa-power-off"></i> Cerrar Todas las Sesiones
+                </button>
+            </div>
+            
+            <p style="color: #888; font-size: 12px; text-align: center; margin-top: 20px;">
+                <i class="fas fa-info-circle"></i> Al cerrar sesión, necesitarás volver a ingresar la contraseña para acceder
+            </p>
+        </div>
+        
+        <!-- CONFIGURACIÓN -->
+        <div style="background: white; padding: 25px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 30px;">
+            <h3 style="color: #333; margin-bottom: 20px;">
+                <i class="fas fa-cog"></i> Configuración
+            </h3>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 8px; color: #666; font-weight: bold;">
+                    <i class="fas fa-bell"></i> Notificaciones
+                </label>
+                <select style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+                    <option>Recibir todas las alertas</option>
+                    <option>Solo alertas importantes</option>
+                    <option>No recibir notificaciones</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 8px; color: #666; font-weight: bold;">
+                    <i class="fas fa-map-marker-alt"></i> Zona en Macas
+                </label>
+                <select style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+                    <option>Centro</option>
+                    <option>Norte</option>
+                    <option>Sur</option>
+                    <option>Este</option>
+                    <option>Oeste</option>
+                </select>
+            </div>
+            
+            <button style="
+                background: #28a745;
+                color: white;
+                border: none;
+                padding: 15px;
+                border-radius: 10px;
+                width: 100%;
+                font-size: 16px;
+                cursor: pointer;
+                margin-top: 10px;
+            ">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+        </div>
+        
+    </main>
+    
+    <!-- MENÚ INFERIOR CON PRIVACIDAD -->
+    <nav class="menu-inferior">
+        <a href="index.html" class="menu-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        
+        <a href="mapa.html" class="menu-item">
+            <i class="fas fa-map"></i>
+            <span>Mapa</span>
+        </a>
+        
+        <a href="javascript:void(0)" onclick="accederDM()" class="menu-item">
+            <i class="fas fa-comment-dots"></i>
+            <span>DM</span>
+            <span id="dm-icono" class="dm-notificacion">🔒</span>
+        </a>
+        
+        <a href="javascript:void(0)" onclick="accederAlertas()" class="menu-item">
+            <i class="fas fa-bell"></i>
+            <span>Alertas</span>
+            <span id="alertas-icono" style="color: #ff9800; font-size: 10px;">🔒</span>
+        </a>
+        
+        <a href="javascript:void(0)" onclick="accederCuenta()" class="menu-item menu-activo">
+            <i class="fas fa-user"></i>
+            <span>Cuenta</span>
+            <span id="cuenta-icono" style="color: #6a11cb; font-size: 10px;">🔒</span>
+        </a>
+    </nav>
+    
+    <!-- SCRIPTS DE NAVEGACIÓN -->
+    <script>
+    // Funciones de navegación con verificación
+    function accederDM() {
+        if (verificarAcceso('dm')) {
+            document.getElementById('dm-icono').textContent = '💬';
+            document.getElementById('dm-icono').style.background = '#6a11cb';
+            window.location.href = 'dm.html';
+        }
+    }
+    
+    function accederAlertas() {
+        if (verificarAcceso('alertas')) {
+            document.getElementById('alertas-icono').textContent = '🔔';
+            document.getElementById('alertas-icono').style.color = '#28a745';
+            window.location.href = 'alertas.html';
+        }
+    }
+    
+    function accederCuenta() {
+        if (verificarAcceso('cuenta')) {
+            document.getElementById('cuenta-icono').textContent = '👤';
+            document.getElementById('cuenta-icono').style.color = '#28a745';
+            window.location.href = 'cuenta.html';
+        }
+    }
+    
+    // Actualizar estados al cargar
+    document.addEventListener('DOMContentLoaded', function() {
+        // Actualizar íconos del menú
+        if (localStorage.getItem('permiso_dm') === 'true') {
+            document.getElementById('dm-icono').textContent = '💬';
+            document.getElementById('dm-icono').style.background = '#6a11cb';
+            document.getElementById('estado-dm').textContent = '✅ Conectado';
+        } else {
+            document.getElementById('estado-dm').textContent = '❌ Desconectado';
+            document.getElementById('estado-dm').style.color = '#ff4757';
+        }
+        
+        if (localStorage.getItem('permiso_alertas') === 'true') {
+            document.getElementById('alertas-icono').textContent = '🔔';
+            document.getElementById('alertas-icono').style.color = '#28a745';
+            document.getElementById('estado-alertas').textContent = '✅ Conectado';
+        } else {
+            document.getElementById('estado-alertas').textContent = '❌ Desconectado';
+            document.getElementById('estado-alertas').style.color = '#ff4757';
+        }
+        
+        if (localStorage.getItem('permiso_cuenta') === 'true') {
+            document.getElementById('cuenta-icono').textContent = '👤';
+            document.getElementById('cuenta-icono').style.color = '#28a745';
+            document.getElementById('estado-cuenta').textContent = '✅ Conectado';
+        } else {
+            document.getElementById('estado-cuenta').textContent = '❌ Desconectado';
+            document.getElementById('estado-cuenta').style.color = '#ff4757';
+        }
+    });
+    </script>
+</body>
+</html>

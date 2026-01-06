@@ -1,22 +1,31 @@
-// negocios.js - DATOS COMPLETOS DE NEGOCIOS DE MACAS
+
+// negocios.js - VERSIÓN CORREGIDA
 console.log("🚀 Cargando datos de negocios de Macas...");
 
 const negocios = [
     {
         id: 1,
-        name: "Loccion Nelly",
-        category: "Perfumería",
-        address: "Macas Centro",
-        hours: "08:00 - 20:00",
-        whatsapp: "573136407028",
-        tags: ["Perfumes", "Loción", "Belleza"],
+        name: "Zapatería Colombiano",  // ← CORREGIDO: con acento
+        category: "Reparación de Calzado",
+        address: "Macas Centro, a lado de la cooperativa JEP",
+        hours: "Lun-Sáb: 8:00 - 20:00 | Dom: 9:00 - 15:00",
+        whatsapp: "593981342236",
+        tags: ["Cambio de suela", "Arreglo de cuero", "Zapatos escolares", "Tacones", "Botas", "Urgencias", "Cambio cierres de bolso mochila pantalon y otros...!"],
         featured: true,
-        phone: "+573136407028",
-        description: "Perfumes y lociones de calidad importada",
-        icono: "fa-spray-can",
-        color: "#e84393",
+        phone: "0981342236",
+        description: "🏆 ¡FUNDADOR DE MACASCONECTA! 🏆\n\n35 años reparando el calzado de Macas. Especialista en cuero, cambio de suelas y arreglos urgentes.",
+        icono: "fas fa-shoe-prints",
+        color: "#8B4513",
         lat: -2.3087,
-        lng: -78.1114
+        lng: -78.1114,
+        // Campos para DM (mantener compatibilidad)
+        nombre: "Zapatería Colombiano",
+        categoria: "Reparación de Calzado",
+        telefono: "0981342236",
+        mensajesPendientes: 0,
+        seleccionado: true,
+        fundador: true,
+        ofertaEspecial: "25% descuento por usar MacasConecta"
     },
     {
         id: 2,
@@ -27,32 +36,21 @@ const negocios = [
         whatsapp: "593994544402",
         tags: ["Turismo", "Viajes", "Excursiones"],
         featured: false,
-        phone: "+593994544402",
+        phone: "0994544402",
         description: "Agencia de viajes y turismo con los mejores destinos",
-        icono: "fa-plane",
+        icono: "fas fa-plane",
         color: "#0984e3",
         lat: -2.3090,
-        lng: -78.1120
+        lng: -78.1120,
+        // Campos para DM
+        nombre: "Viaja Conmigo Ecuador",
+        categoria: "Turismo",
+        telefono: "0994544402",
+        mensajesPendientes: 2,
+        seleccionado: true
     },
     {
-        id: 3,
-        name: "Taxi Seguro Macas",
-        category: "Transporte",
-        address: "Toda la ciudad de Macas",
-        hours: "24 HORAS",
-        whatsapp: "593986888729",
-        tags: ["Taxi", "Emergencia", "24 horas", "Transporte urgente"],
-        featured: false,
-        phone: "+593986888729",
-        description: "Servicio de taxi seguro 24 horas los 7 días de la semana",
-        icono: "fa-taxi",
-        color: "#00b894",
-        emergencia: true,
-        lat: -2.3080,
-        lng: -78.1100
-    },
-    {
-        id: 4,
+        id: 3,  // ← ¡ESTE DEBERÍA SER ELECTRÓNICA OCHOA, NO ZAPATERÍA DUPLICADA!
         name: "Electrónica Ochoa",
         category: "Reparación Electrónica",
         address: "Calle Amazonas, Macas",
@@ -60,15 +58,22 @@ const negocios = [
         whatsapp: "593981139424",
         tags: ["Reparación", "Electrónica", "Técnico", "Mantenimiento"],
         featured: false,
-        phone: "+593981139424",
+        phone: "0981139424",
         description: "Reparación y mantenimiento de equipos electrónicos",
-        icono: "fa-tv",
+        icono: "fas fa-tv",
         color: "#8e44ad",
         lat: -2.3075,
-        lng: -78.1130
+        lng: -78.1130,
+        // Campos para DM
+        nombre: "Electrónica Ochoa",
+        categoria: "Electrónica",
+        telefono: "0981139424",
+        mensajesPendientes: 1,
+        seleccionado: true
     },
-    {
-        id: 5,
+
+     {
+        id: 4,
         name: "Restaurant Proaño",
         category: "Restaurante",
         address: "Barrio Proaño, Macas",
@@ -76,31 +81,43 @@ const negocios = [
         whatsapp: "593989866092",
         tags: ["Comida típica", "Almuerzos", "Cenas", "Platos ecuatorianos"],
         featured: true,
-        phone: "+593989866092",
+        phone: "0989866092",
         description: "Comida típica ecuatoriana con los mejores sabores de Macas",
-        icono: "fa-utensils",
+        icono: "fas fa-utensils",
         color: "#e67e22",
         lat: -2.3100,
-        lng: -78.1090
+        lng: -78.1090,
+        // Campos adicionales para DM
+        nombre: "Restaurant Proaño",
+        categoria: "Restaurante",
+        telefono: "0989866092",
+        mensajesPendientes: 0,
+        seleccionado: false
     },
-    {
-        id: 6,
-        name: "Farmacia Mia",
+     {
+       id: 5,
+     name: "Farmacia Mia",
         category: "Farmacia",
         address: "Av. Amazonas, Macas",
         hours: "09:00 - 20:00",
         whatsapp: "593990035600",
         tags: ["Medicamentos", "Farmacia", "Salud", "Despacho a domicilio"],
         featured: false,
-        phone: "+593990035600",
+        phone: "0990035600",
         description: "Farmacia con amplio stock y despacho a domicilio",
-        icono: "fa-pills",
+        icono: "fas fa-pills",
         color: "#e74c3c",
         lat: -2.3065,
-        lng: -78.1110
-    },
+        lng: -78.1110,
+        // Campos adicionales para DM
+        nombre: "Farmacia Mia",
+        categoria: "Farmacia",
+        telefono: "0990035600",
+        mensajesPendientes: 0,
+        seleccionado: false
+},
     {
-        id: 7,
+        id: 6,
         name: "Taller Mecánico Rápido",
         category: "Mecánica Automotriz",
         address: "Vía al Puyo, Macas",
@@ -108,15 +125,21 @@ const negocios = [
         whatsapp: "593987654321",
         tags: ["Mecánica", "Reparación", "Automóviles", "Mantenimiento"],
         featured: false,
-        phone: "+593987654321",
+        phone: "0987654321",
         description: "Taller mecánico especializado en todo tipo de vehículos",
-        icono: "fa-car",
+        icono: "fas fa-car",
         color: "#34495e",
         lat: -2.3120,
-        lng: -78.1080
+        lng: -78.1080,
+        // Campos adicionales para DM
+        nombre: "Taller Mecánico Rápido",
+        categoria: "Mecánica",
+        telefono: "0987654321",
+        mensajesPendientes: 0,
+        seleccionado: false
     },
     {
-        id: 8,
+        id: 7,
         name: "Supermercado El Ahorro",
         category: "Supermercado",
         address: "Centro Comercial Macas",
@@ -124,16 +147,66 @@ const negocios = [
         whatsapp: "593996633221",
         tags: ["Supermercado", "Abarrotes", "Víveres", "Despensa"],
         featured: false,
-        phone: "+593996633221",
+        phone: "0996633221",
         description: "Supermercado con los mejores precios y variedad",
-        icono: "fa-shopping-cart",
+        icono: "fas fa-shopping-cart",
         color: "#27ae60",
         lat: -2.3070,
-        lng: -78.1140
+        lng: -78.1140,
+        // Campos adicionales para DM
+        nombre: "Supermercado El Ahorro",
+        categoria: "Supermercado",
+        telefono: "0996633221",
+        mensajesPendientes: 0,
+        seleccionado: false
+    },
+    {
+        id: 8,
+        name: "Moto Servicio Macas",
+        category: "Transporte",
+        address: "Av. Ciudad de Macas",
+        hours: "07:00 - 19:00",
+        whatsapp: "593991234567",
+        tags: ["Moto", "Transporte", "Mensajería", "Servicio"],
+        featured: true,
+        phone: "0991234567",
+        description: "Servicio de transporte y mensajería en moto",
+        icono: "fas fa-motorcycle",
+        color: "#2575fc",
+        lat: -2.3050,
+        lng: -78.1100,
+        // Campos adicionales para DM
+        nombre: "Moto Servicio Macas",
+        categoria: "Transporte",
+        telefono: "0991234567",
+        mensajesPendientes: 3,
+        seleccionado: true
+    },
+    {
+        id: 9,
+        name: "Loccion Nelly",
+        category: "Belleza y Spa",
+        address: "Calle 10 de Agosto, Macas",
+        hours: "09:00 - 19:00",
+        whatsapp: "593987654321",
+        tags: ["Belleza", "Spa", "Cuidado personal", "Estética"],
+        featured: true,
+        phone: "0987654321",
+        description: "Centro de belleza y spa con los mejores tratamientos",
+        icono: "fas fa-spa",
+        color: "#ff6b9d",
+        lat: -2.3080,
+        lng: -78.1150,
+        // Campos adicionales para DM
+        nombre: "Loccion Nelly",
+        categoria: "Belleza",
+        telefono: "0987654321",
+        mensajesPendientes: 2,
+        seleccionado: true
     }
+ 
+    // ... Los demás negocios (IDs 4, 5, 6, etc.)
 ];
 
 console.log(`✅ ${negocios.length} negocios cargados correctamente`);
-
-// Hacer array disponible globalmente
 window.negocios = negocios;

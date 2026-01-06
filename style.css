@@ -935,3 +935,341 @@ html {
     50% { transform: scale(1.1); }
     100% { transform: scale(1); }
 }
+
+/* =========================================== */
+/* ESTILOS PARA SISTEMA DM MEJORADO */
+/* =========================================== */
+
+/* Botón DM en tarjetas */
+.btn-dm {
+    background: linear-gradient(135deg, #6a11cb, #2575fc) !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 15px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    transition: all 0.3s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+}
+
+.btn-dm:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(106, 17, 203, 0.3) !important;
+}
+
+/* Badge de notificación DM */
+.dm-notificacion {
+    position: absolute !important;
+    top: -5px !important;
+    right: -5px !important;
+    background: #ff4757 !important;
+    color: white !important;
+    min-width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    font-size: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: bold !important;
+    animation: pulse 2s infinite !important;
+    padding: 0 5px !important;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Animaciones para modales */
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutRight {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+/* Botones de acción en modales */
+.modal-accion {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-accion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(106, 17, 203, 0.3);
+}
+
+/* Estilos responsivos para botones DM */
+@media (max-width: 768px) {
+    .btn-dm {
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+    }
+    
+    .botones-accion {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+    
+    .botones-accion .btn-accion {
+        flex: 1 !important;
+        min-width: calc(50% - 8px) !important;
+        text-align: center !important;
+    }
+}
+
+/* =========================================== */
+/* ESTILOS PARA TARJETAS CON DM */
+/* =========================================== */
+.tarjeta-negocio .botones-accion {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.tarjeta-negocio .btn-accion {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    border: none;
+}
+
+.tarjeta-negocio .btn-llamar {
+    background: #28a745;
+    color: white;
+}
+
+.tarjeta-negocio .btn-llamar-emergencia {
+    background: #dc3545;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+.tarjeta-negocio .btn-whatsapp {
+    background: #25d366;
+    color: white;
+}
+
+.tarjeta-negocio .btn-mapa {
+    background: #17a2b8;
+    color: white;
+}
+
+.tarjeta-negocio .btn-accion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* =========================================== */
+/* ESTILOS PARA MODALES */
+/* =========================================== */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modalAppear 0.3s ease;
+}
+
+@keyframes modalAppear {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* =========================================== */
+/* ESTILOS PARA TOAST NOTIFICATIONS */
+/* =========================================== */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 1002;
+    animation: slideInRight 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 400px;
+}
+
+.toast-success {
+    background: #4CAF50;
+    color: white;
+}
+
+.toast-warning {
+    background: #FF9800;
+    color: white;
+}
+
+.toast-error {
+    background: #FF4757;
+    color: white;
+}
+
+.toast-info {
+    background: #2196F3;
+    color: white;
+}
+
+/* =========================================== */
+/* ESTILOS PARA NOTIFICACIONES DM */
+/* =========================================== */
+
+.dm-notificacion {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff4757;
+    color: white;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    padding: 0 4px;
+    z-index: 10;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Para el menú DM */
+.menu-item.menu-dm {
+    position: relative;
+}
+
+/* Quitar la clase menu-activo del DM si no estamos en dm.html */
+.menu-item.menu-activo {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+/* MENÚ INFERIOR FIJO */
+.menu-inferior {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 2px solid #f0f0f0;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 5px 15px;
+    z-index: 1000;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #666;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    padding: 5px;
+    transition: all 0.2s ease;
+}
+
+.menu-item:hover {
+    transform: translateY(-3px);
+}
+
+.menu-item i {
+    font-size: 22px;
+    margin-bottom: 4px;
+    transition: all 0.3s ease;
+}
+
+.menu-item span {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.menu-activo {
+    color: #6a11cb !important;
+}
+
+.menu-activo i {
+    color: #6a11cb;
+    transform: scale(1.1);
+}
+
+/* Notificación en DM */
+.dm-notificacion {
+    position: absolute;
+    top: -5px;
+    right: 15px;
+    background: #ff4757;
+    color: white;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    padding: 0 4px;
+    border: 2px solid white;
+}
+
+/* Espacio para que el contenido no quede debajo del menú */
+main {
+    padding-bottom: 80px !important;
+}
