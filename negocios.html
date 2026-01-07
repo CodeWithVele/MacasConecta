@@ -1,482 +1,65 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Negocios - MacasConecta</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Header */
-        .header {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        .header h1 {
-            color: #333;
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .header h1 i {
-            color: #764ba2;
-        }
-
-        /* Buscador */
-        .search-box {
-            background: #f8f9fa;
-            border-radius: 50px;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            border: 2px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .search-box:focus-within {
-            border-color: #667eea;
-            background: white;
-        }
-
-        .search-box i {
-            color: #667eea;
-            font-size: 20px;
-        }
-
-        .search-box input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            font-size: 16px;
-            color: #333;
-            outline: none;
-        }
-
-        .search-box input::placeholder {
-            color: #888;
-        }
-
-        .search-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 12px 25px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .search-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* Categorías */
-        .categories {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
-        .category-btn {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 50px;
-            padding: 10px 20px;
-            white-space: nowrap;
-            font-weight: 500;
-            color: #555;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .category-btn:hover,
-        .category-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: transparent;
-        }
-
-        /* Tarjeta de Negocio */
-        .business-card {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            animation: slideUp 0.5s ease;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .business-badge {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 14px;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-
-        .business-name {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .business-name i {
-            color: #667eea;
-        }
-
-        .business-info {
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .business-details {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .detail-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            color: #555;
-        }
-
-        .detail-item i {
-            color: #667eea;
-            width: 20px;
-        }
-
-        /* Servicios */
-        .services {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .service-tag {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        /* Botones de Acción */
-        .action-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .action-btn {
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: bold;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .btn-call { background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%); }
-        .btn-whatsapp { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); }
-        .btn-map { background: linear-gradient(135deg, #2196F3 0%, #0D47A1 100%); }
-        .btn-dm { background: linear-gradient(135deg, #9C27B0 0%, #6A1B9A 100%); }
-
-        /* Mensaje vacío */
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
-        }
-
-        .empty-state i {
-            font-size: 60px;
-            color: #ddd;
-            margin-bottom: 20px;
-        }
-
-        /* Footer */
-        .footer-nav {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            text-align: center;
-        }
-
-        .nav-item {
-            color: #666;
-            text-decoration: none;
-            font-size: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            transition: color 0.3s;
-        }
-
-        .nav-item i {
-            font-size: 20px;
-        }
-
-        .nav-item.active {
-            color: #667eea;
-            font-weight: bold;
-        }
-
-        .nav-item:hover {
-            color: #764ba2;
-        }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            .action-buttons {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-nav {
-                grid-template-columns: repeat(5, 1fr);
-                font-size: 11px;
-            }
-        }
-    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-store"></i> Negocios Macas</h1>
+<body style="background:#f0f0f0; padding:20px; font-family:Arial;">
+    <div style="max-width:500px; margin:auto;">
+        <h1 style="text-align:center; color:#333;">🛍️ NEGOCIOS MACAS</h1>
+        
+        <!-- Buscador Simple -->
+        <div style="background:white; padding:15px; border-radius:10px; margin-bottom:20px;">
+            <input type="text" placeholder="Buscar negocio..." 
+                   style="width:70%; padding:10px; border:1px solid #ddd; border-radius:5px;">
+            <button style="padding:10px 20px; background:#4CAF50; color:white; border:none; border-radius:5px;">
+                Buscar
+            </button>
+            <p style="margin-top:10px; color:#666; font-size:14px;">
+                <a href="#" onclick="alert("Próximamente más categorías")">Ver todas las categorías</a>
+            </p>
+        </div>
+        
+        <!-- Zapatería Colombiano -->
+        <div style="background:white; padding:20px; border-radius:10px; margin-bottom:20px;">
+            <h2 style="color:#333;">👞 ZAPATERÍA COLOMBIANO</h2>
+            <p><strong>⭐ FUNDADOR DE MACASCONECTA</strong></p>
+            <p>35 años reparando calzado en Macas. Especialista en cuero y reparaciones urgentes.</p>
             
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Ej: farmacia, gas, taxi, panadería..." autocomplete="off">
-                <button class="search-btn" onclick="buscarNegocios()">Buscar</button>
+            <div style="background:#f9f9f9; padding:15px; border-radius:8px; margin:15px 0;">
+                <p>📍 <strong>Ubicación:</strong> Macas Centro, al lado cooperativa JEP</p>
+                <p>🕐 <strong>Horario:</strong> Lun-Sáb: 8:00-20:00 | Dom: 9:00-15:00</p>
+                <p>📞 <strong>Teléfono:</strong> 0981342236</p>
+                <p>💬 <strong>WhatsApp:</strong> 593981342236</p>
             </div>
-
-            <div class="categories">
-                <button class="category-btn active" onclick="filtrarCategoria('todos')">Todos</button>
-                <button class="category-btn" onclick="filtrarCategoria('servicios')">Servicios</button>
-                <button class="category-btn" onclick="filtrarCategoria('comida')">Comida</button>
-                <button class="category-btn" onclick="filtrarCategoria('comercio')">Comercio</button>
-                <button class="category-btn" onclick="filtrarCategoria('salud')">Salud</button>
-                <button class="category-btn" onclick="verTodasCategorias()">
-                    <i class="fas fa-ellipsis-h"></i> Ver todas
-                </button>
-            </div>
-        </div>
-
-        <!-- Resultados de Búsqueda -->
-        <div id="searchResults">
-            <!-- Aquí aparecerán los negocios dinámicamente -->
             
-            <!-- ZAPATERÍA COLOMBIANO (Ejemplo) -->
-            <div class="business-card" data-category="servicios" data-tags="zapateria reparacion calzado cuero">
-                <div class="business-badge">⭐ FUNDADOR DE MACASCONECTA</div>
-                
-                <h2 class="business-name">
-                    <i class="fas fa-shoe-prints"></i> Zapatería Colombiano
-                </h2>
-                
-                <p class="business-info">
-                    35 años reparando el calzado de Macas. Especialista en cuero, cambio de suelas y arreglos urgentes.
-                </p>
-                
-                <div class="business-details">
-                    <div class="detail-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span><strong>Ubicación:</strong> Macas Centro, a lado de la cooperativa JEP</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-clock"></i>
-                        <span><strong>Horario:</strong> Lun-Sáb: 8:00 - 20:00 | Dom: 9:00 - 15:00</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fas fa-phone"></i>
-                        <span><strong>Teléfono:</strong> 0981342236</span>
-                    </div>
-                    <div class="detail-item">
-                        <i class="fab fa-whatsapp"></i>
-                        <span><strong>WhatsApp:</strong> 593981342236</span>
-                    </div>
-                </div>
-                
-                <div class="services">
-                    <span class="service-tag">Cambio de suela</span>
-                    <span class="service-tag">Arreglo de cuero</span>
-                    <span class="service-tag">Zapatos escolares</span>
-                    <span class="service-tag">Tacones</span>
-                    <span class="service-tag">Botas</span>
-                    <span class="service-tag">Urgencias</span>
-                    <span class="service-tag">Cambio de cierres</span>
-                </div>
-                
-                <div class="action-buttons">
-                    <a href="tel:0981342236" class="action-btn btn-call">
-                        <i class="fas fa-phone"></i> LLAMAR
-                    </a>
-                    <a href="https://wa.me/593981342236" class="action-btn btn-whatsapp">
-                        <i class="fab fa-whatsapp"></i> WHATSAPP
-                    </a>
-                    <a href="mapa.html?negocio=zapateria-colombiano" class="action-btn btn-map">
-                        <i class="fas fa-map-marked-alt"></i> MAPA
-                    </a>
-                    <a href="dm.html?negocio=zapateria-colombiano" class="action-btn btn-dm">
-                        <i class="fas fa-comment-dots"></i> CONTACTAR
-                    </a>
-                </div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin:15px 0;">
+                <span style="background:#e3f2fd; color:#1976d2; padding:5px 10px; border-radius:15px;">Cambio de suela</span>
+                <span style="background:#e3f2fd; color:#1976d2; padding:5px 10px; border-radius:15px;">Arreglo de cuero</span>
+                <span style="background:#e3f2fd; color:#1976d2; padding:5px 10px; border-radius:15px;">Zapatos escolares</span>
+                <span style="background:#e3f2fd; color:#1976d2; padding:5px 10px; border-radius:15px;">Urgencias</span>
+            </div>
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <a href="tel:0981342236" style="background:#4CAF50; color:white; padding:12px; text-align:center; border-radius:8px; text-decoration:none;">
+                    📞 LLAMAR
+                </a>
+                <a href="https://wa.me/593981342236" style="background:#25D366; color:white; padding:12px; text-align:center; border-radius:8px; text-decoration:none;">
+                    💬 WHATSAPP
+                </a>
+                <a href="mapa.html" style="background:#2196F3; color:white; padding:12px; text-align:center; border-radius:8px; text-decoration:none;">
+                    🗺️ MAPA
+                </a>
+                <a href="dm.html?negocio=zapateria" style="background:#9C27B0; color:white; padding:12px; text-align:center; border-radius:8px; text-decoration:none;">
+                    ✉️ CONTACTAR
+                </a>
             </div>
         </div>
-
-        <!-- Footer Navigation -->
-        <div class="footer-nav">
-            <a href="index.html" class="nav-item">
-                <i class="fas fa-home"></i> Inicio
-            </a>
-            <a href="negocios.html" class="nav-item active">
-                <i class="fas fa-store"></i> Negocios
-            </a>
-            <a href="mapa.html" class="nav-item">
-                <i class="fas fa-map"></i> Mapa
-            </a>
-            <a href="alerta.html" class="nav-item">
-                <i class="fas fa-bell"></i> Alertas
-            </a>
-            <a href="cuenta.html" class="nav-item">
-                <i class="fas fa-user"></i> Cuenta
-            </a>
-        </div>
+        
+        <p style="text-align:center; color:#666; margin-top:30px;">
+            ¿Tienes un negocio? <a href="agregar.html">Agrégalo aquí</a>
+        </p>
     </div>
-
-    <script>
-        // Datos de ejemplo (después los cargas desde negocios.js)
-        const negocios = [
-            {
-                id: 1,
-                nombre: "Zapatería Colombiano",
-                categoria: "servicios",
-                descripcion: "35 años reparando el calzado de Macas. Especialista en cuero, cambio de suelas y arreglos urgentes.",
-                telefono: "0981342236",
-                whatsapp: "593981342236",
-                direccion: "Macas Centro, a lado de la cooperativa JEP",
-                horario: "Lun-Sáb: 8:00 - 20:00 | Dom: 9:00 - 15:00",
-                servicios: ["Cambio de suela", "Arreglo de cuero", "Zapatos escolares", "Tacones", "Botas", "Urgencias", "Cambio de cierres"],
-                etiquetas: ["zapateria", "reparacion", "calzado", "cuero", "suelas", "tacones", "botas"]
-            }
-        ];
-
-        function buscarNegocios() {
-            const input = document.getElementById('searchInput');
-            const termino = input.value.toLowerCase().trim();
-            
-            if (termino === '') {
-                alert('Por favor, escribe algo para buscar');
-                input.focus();
-                return;
-            }
-            
-            // Aquí implementarías la búsqueda real
-            console.log('Buscando:', termino);
-            
-            // Mostrar mensaje temporal
-            const results = document.getElementById('searchResults');
-            results.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-search"></i>
-                    <h3>Buscando "${termino}"...</h3>
-                    <p>Pronto tendremos más negocios en MacasConecta</p>
-                </div>
-            `;
-        }
-
-        function filtrarCategoria(categoria) {
-            // Actualizar botones activos
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Aquí implementarías el filtrado por categoría
-            console.log('Filtrando por:', categoria);
-        }
-
-        function verTodasCategorias() {
-            alert('Pronto tendremos todas las categorías disponibles');
-            // Aquí podrías mostrar un modal con todas las categorías
-        }
-
-        // Buscar al presionar Enter
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                buscarNegocios();
-            }
-        });
-    </script>
 </body>
 </html>
