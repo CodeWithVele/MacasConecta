@@ -6,167 +6,235 @@
     <title>Negocios - MacasConecta</title>
     <style>
         body {
+            background: white;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background: #f5f5f5;
         }
+        
         .container {
             max-width: 500px;
             margin: 0 auto;
         }
-        .search-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
+        
+        .search-section {
             margin-bottom: 20px;
         }
-        .search-box input {
-            width: 70%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
         }
-        .search-box button {
-            padding: 10px 15px;
+        
+        .search-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .search-btn {
             background: #4CAF50;
             color: white;
             border: none;
-            border-radius: 5px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
         }
+        
         .categories-link {
-            display: block;
-            margin-top: 10px;
             color: #4CAF50;
             text-decoration: none;
-        }
-        .business-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-        .business-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
-        .business-details {
-            margin: 15px 0;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 8px;
-        }
-        .services {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 15px 0;
-        }
-        .service-tag {
-            background: #e3f2fd;
-            color: #1976d2;
-            padding: 5px 10px;
-            border-radius: 15px;
             font-size: 14px;
         }
-        .action-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+        
+        .business-list {
+            margin-top: 20px;
         }
-        .action-btn {
-            padding: 12px;
-            text-align: center;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-        .btn-call { background: #4CAF50; }
-        .btn-whatsapp { background: #25D366; }
-        .btn-map { background: #2196F3; }
-        .btn-dm { background: #9C27B0; }
+        
         .no-results {
             text-align: center;
             padding: 40px 20px;
             color: #666;
         }
-        .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0;
-            background: white;
-            border-top: 1px solid #ddd;
+        
+        .nav-bottom {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
+            background: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
         }
+        
         .nav-item {
             text-align: center;
             color: #666;
             text-decoration: none;
             font-size: 12px;
         }
+        
+        /* ESTILOS ORIGINALES QUE TENÍAS */
+        .business-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .business-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .business-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .business-badge {
+            background: #FFD700;
+            color: #333;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .business-info {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .business-details {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .detail-row {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .detail-icon {
+            width: 20px;
+            color: #4CAF50;
+        }
+        
+        .services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .service-tag {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+        }
+        
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .btn-call { background: #4CAF50; }
+        .btn-whatsapp { background: #25D366; }
+        .btn-map { background: #2196F3; }
+        .btn-dm { background: #9C27B0; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- TÍTULO ORIGINAL -->
-        <h2 style="color: #333;">CONECTAR MI NEGOCIO</h2>
-        <p style="color: #666; margin-bottom: 20px;">SOPORTE RÁPIDO</p>
-        
-        <!-- BUSCADOR ORIGINAL -->
-        <div class="search-box">
-            <input type="text" placeholder="Ej: farmacia, gas, taxi, panadería..." id="searchInput">
-            <button onclick="buscar()">Buscar</button>
-            <a href="#" class="categories-link" onclick="verCategorias()">📌 Ver todas las categorías</a>
+        <div class="search-section">
+            <h2>CONECTAR MI NEGOCIO</h2>
+            
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Ej: farmacia, gas, taxi, panadería...">
+                <button class="search-btn">Buscar</button>
+            </div>
+            
+            <a href="#" class="categories-link">📌 Ver todas las categorías</a>
         </div>
         
-        <!-- NEGOCIOS DISPONIBLES -->
-        <p style="color: #666; font-size: 14px;">negocios disponibles</p>
-        
-        <!-- ZAPATERÍA COLOMBIANO (SIEMPRE VISIBLE) -->
-        <div class="business-card" id="zapateriaCard">
-            <div class="business-name">Zapatería Colombiano</div>
-            <p>¡FUNDADOR DE MACASCONECTA! 35 años reparando el calzado de Macas.</p>
-            
-            <div class="business-details">
-                <p><strong>📍 Ubicación:</strong> Macas Centro, a lado de la cooperativa JEP</p>
-                <p><strong>🕐 Horario:</strong> Lun-Sáb: 8:00-20:00 | Dom: 9:00-15:00</p>
-                <p><strong>📞 Teléfono:</strong> 0981342236</p>
-                <p><strong>💬 WhatsApp:</strong> 593981342236</p>
-            </div>
-            
-            <div class="services">
-                <span class="service-tag">Cambio de suela</span>
-                <span class="service-tag">Arreglo de cuero</span>
-                <span class="service-tag">Zapatos escolares</span>
-                <span class="service-tag">Tacones</span>
-                <span class="service-tag">Botas</span>
-                <span class="service-tag">Urgencias</span>
-                <span class="service-tag">Cambio de cierres</span>
-            </div>
-            
-            <div class="action-buttons">
-                <a href="tel:0981342236" class="action-btn btn-call">LLAMAR</a>
-                <a href="https://wa.me/593981342236" class="action-btn btn-whatsapp">WHATSAPP</a>
-                <a href="mapa.html" class="action-btn btn-map">VER MAPA</a>
-                <a href="dm.html?negocio=zapateria" class="action-btn btn-dm">CONTACTAR</a>
+        <div class="business-list">
+            <!-- NEGOCIO DISPONIBLE - Zapatería Colombiano -->
+            <div class="business-card">
+                <div class="business-header">
+                    <div class="business-name">Zapatería Colombiano</div>
+                    <div class="business-badge">⭐ FUNDADOR</div>
+                </div>
+                
+                <p class="business-info">35 años reparando el calzado de Macas. Especialista en cuero, cambio de suelas y arreglos urgentes.</p>
+                
+                <div class="business-details">
+                    <div class="detail-row">
+                        <span class="detail-icon">📍</span>
+                        <strong>Ubicación:</strong> Macas Centro, a lado de la cooperativa JEP
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-icon">🕐</span>
+                        <strong>Horario:</strong> Lun-Sáb: 8:00 - 20:00 | Dom: 9:00 - 15:00
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-icon">📞</span>
+                        <strong>Teléfono:</strong> 0981342236
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-icon">💬</span>
+                        <strong>WhatsApp:</strong> 593981342236
+                    </div>
+                </div>
+                
+                <div class="services">
+                    <span class="service-tag">Cambio de suela</span>
+                    <span class="service-tag">Arreglo de cuero</span>
+                    <span class="service-tag">Zapatos escolares</span>
+                    <span class="service-tag">Tacones</span>
+                    <span class="service-tag">Botas</span>
+                    <span class="service-tag">Urgencias</span>
+                    <span class="service-tag">Cambio cierres</span>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="tel:0981342236" class="action-btn btn-call">LLAMAR</a>
+                    <a href="https://wa.me/593981342236" class="action-btn btn-whatsapp">WHATSAPP</a>
+                    <a href="mapa.html?negocio=zapateria" class="action-btn btn-map">VER MAPA</a>
+                    <a href="dm.html?negocio=zapateria" class="action-btn btn-dm">DM</a>
+                </div>
             </div>
         </div>
         
-        <!-- MENSAJE "No encontramos resultados" -->
-        <div class="no-results" id="noResults" style="display: none;">
+        <div class="no-results" style="display: none;">
             <h3>No encontramos resultados</h3>
-            <p>No hay negocios que coincidan con "<span id="searchTerm"></span>"</p>
-            <a href="#" onclick="mostrarTodos()" style="color: #4CAF50; text-decoration: none;">Ver todos los negocios</a>
+            <p>No hay negocios que coincidan con "<span id="search-term"></span>"</p>
         </div>
     </div>
     
-    <!-- NAVEGACIÓN INFERIOR ORIGINAL -->
-    <div class="bottom-nav">
+    <div class="nav-bottom">
         <a href="index.html" class="nav-item">Inicio</a>
         <a href="mapa.html" class="nav-item">Mapa</a>
         <a href="dm.html" class="nav-item">DM</a>
@@ -175,35 +243,34 @@
     </div>
     
     <script>
+        // FUNCIÓN ORIGINAL DE BÚSQUEDA - MANTIENE ZAPATERÍA VISIBLE
+        document.querySelector('.search-btn').addEventListener('click', buscar);
+        document.querySelector('.search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') buscar();
+        });
+        
         function buscar() {
-            const input = document.getElementById('searchInput').value.toLowerCase();
-            const zapateria = document.getElementById('zapateriaCard');
-            const noResults = document.getElementById('noResults');
-            const searchTerm = document.getElementById('searchTerm');
+            const input = document.querySelector('.search-input').value.toLowerCase();
+            const businessCard = document.querySelector('.business-card');
+            const noResults = document.querySelector('.no-results');
+            const searchTerm = document.getElementById('search-term');
             
-            // LA ZAPATERÍA NUNCA DESAPARECE
-            zapateria.style.display = 'block';
+            // SIEMPRE mostrar la zapatería
+            businessCard.style.display = 'block';
             
-            if (input === '' || input.includes('zapater') || input.includes('repar')) {
+            if (input === '' || input.includes('zapater') || input.includes('repar') || input.includes('calzado')) {
                 noResults.style.display = 'none';
             } else {
+                // Mostrar mensaje pero MANTENER la zapatería visible
                 searchTerm.textContent = input;
                 noResults.style.display = 'block';
             }
         }
         
-        function verCategorias() {
-            alert('Categorías: Restaurantes, Farmacias, Supermercados, Talleres, etc.');
-        }
-        
-        function mostrarTodos() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('noResults').style.display = 'none';
-        }
-        
-        // Buscar con Enter
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') buscar();
+        // Ver todas las categorías
+        document.querySelector('.categories-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Próximamente: Restaurantes, Farmacias, Supermercados, Talleres, etc.');
         });
     </script>
 </body>
