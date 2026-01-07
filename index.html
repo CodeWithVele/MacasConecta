@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<!DOCTYPE html>
-<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,23 +28,23 @@
 
 <body>
     <!-- ENCABEZADO -->
-    
-   <header class="main-header" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
-    <div class="header-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%;">
-        <div class="logo-circle">
-            <span class="logo-icon">🤝</span>
+    <header class="main-header" style="text-align: center; display: flex; flex-direction: column; align-items: center;">
+        <div class="header-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%;">
+            <div class="logo-circle">
+                <span class="logo-icon">🤝</span>
+            </div>
+            <div class="header-text" style="text-align: center; width: 100%;">
+                <h1 class="app-title" style="text-align: center; width: 100%; margin: 10px 0 5px 0;">MacasConecta</h1>
+                <p class="app-subtitle" style="text-align: center; width: 100%; margin: 0;">Tu guía local de Macas</p>
+            </div>
         </div>
-        <div class="header-text" style="text-align: center; width: 100%;">
-            <h1 class="app-title" style="text-align: center; width: 100%; margin: 10px 0 5px 0;">MacasConecta</h1>
-            <p class="app-subtitle" style="text-align: center; width: 100%; margin: 0;">Tu guía local de Macas</p>
+        
+        <div class="alerta-urgente" style="text-align: center; justify-content: center; width: 90%; margin-top: 15px;">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Si hay paro o cierres, revisa horarios antes de salir</span>
         </div>
-    </div>
-    
-    <div class="alerta-urgente" style="text-align: center; justify-content: center; width: 90%; margin-top: 15px;">
-        <i class="fas fa-exclamation-circle"></i>
-        <span>Si hay paro o cierres, revisa horarios antes de salir</span>
-    </div>
-</header>
+    </header>
+
     <!-- BOTONES PRINCIPALES -->
     <div class="botones-principales">
         <a href="agregar.html" class="btn-principal btn-verde">
@@ -62,35 +59,33 @@
         </a>
     </div>
 
-    <!-- BUSCADOR -->
-    <div class="buscador-container">
-        <div class="buscador-box">
-            <i class="fas fa-search buscador-icono"></i>
+    <!-- BUSCADOR INTERACTIVO -->
+    <div class="buscador-interactivo">
+        <div class="buscador-contenedor">
             <input type="text" 
-                   class="buscador-input" 
-                   placeholder="Ej: farmacia, gas, taxi, panadería..."
-                   id="buscadorInput">
-            <button class="buscador-boton" id="buscadorBoton">
-                <i class="fas fa-search"></i>
-                <span>Buscar</span>
+                   id="search-input" 
+                   class="buscador-input"
+                   placeholder="🔍 Buscar negocios (ej: restaurant, zapatería, farmacia...)" 
+                   aria-label="Buscar negocios">
+            <button id="search-button" class="buscador-boton">
+                <i class="fas fa-search"></i> Buscar
             </button>
         </div>
         
-            <i class="fas fa-list"></i>
-            <span>Ver todas las categorías</span>
-        </button>
-    </div>
-
-    <!-- CONTADOR -->
-    <div class="contador-negocios">
-        <i class="fas fa-store contador-icono"></i>
-        <span class="contador-numero" id="contadorNumero">6</span>
-        <span class="contador-texto">negocios disponibles</span>
+        <a href="#" id="show-all-link" class="categorias-link">
+            <i class="fas fa-check-circle"></i> Ver todas las categorías
+        </a>
+        
+        <div class="contador-negocios">
+            <i class="fas fa-store contador-icono"></i>
+            <span class="contador-numero" id="contadorNumero">6</span>
+            <span class="contador-texto" id="contadorTexto">negocios disponibles</span>
+        </div>
     </div>
 
     <!-- LISTA DE NEGOCIOS -->
     <main class="lista-negocios" id="listaNegocios">
-        <!-- Los negocios aparecerán aquí vía JavaScript -->
+        <!-- Los negocios aparecerán aquí dinámicamente -->
         <div class="cargando-negocios">
             <div class="spinner">
                 <i class="fas fa-circle-notch"></i>
@@ -129,7 +124,6 @@
             <p style="color: #dc3545; font-weight: bold; font-size: 18px;">
                 ¡PRIMER MES 100% GRATIS PARA TODOS!
             </p>
-            <!-- <p>Hoy habla con 10 negocios, si 5 aceptan después, ganas $25 mensuales.</p> -->
         </div>
     </section>
 
@@ -149,9 +143,36 @@
         </div>
     </footer>
 
-   
+    <!-- MENÚ INFERIOR -->
+    <nav class="menu-inferior">
+        <a href="index.html" class="menu-item menu-activo">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        
+        <a href="mapa.html" class="menu-item">
+            <i class="fas fa-map"></i>
+            <span>Mapa</span>
+        </a>
+        
+        <a href="dm.html" class="menu-item">
+            <i class="fas fa-comment-dots"></i>
+            <span>DM</span>
+            <span class="dm-notificacion">3</span>
+        </a>
+        
+        <a href="alertas.html" class="menu-item">
+            <i class="fas fa-bell"></i>
+            <span>Alertas</span>
+        </a>
+        
+        <a href="cuenta.html" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span>Cuenta</span>
+        </a>
+    </nav>
 
-       <!-- SCRIPTS -->
+    <!-- SCRIPTS -->
     <script src="negocios.js"></script>
     <script src="script.js"></script>
     
@@ -207,36 +228,419 @@
     
     console.log("✅ Sistema de notificaciones DM cargado");
     </script>
-      <!-- MENÚ INFERIOR -->
-<nav class="menu-inferior">
-    <a href="index.html" class="menu-item menu-activo">
-        <i class="fas fa-home"></i>
-        <span>Inicio</span>
-    </a>
-    
-    <a href="mapa.html" class="menu-item">
-        <i class="fas fa-map"></i>
-        <span>Mapa</span>
-    </a>
-    
-    <a href="dm.html" class="menu-item">
-        <i class="fas fa-comment-dots"></i>
-        <span>DM</span>
-        <span class="dm-notificacion">3</span>
-    </a>
-    
-    <a href="alertas.html" class="menu-item">
-        <i class="fas fa-bell"></i>
-        <span>Alertas</span>
-    </a>
-    
-    <a href="cuenta.html" class="menu-item">
-        <i class="fas fa-user"></i>
-        <span>Cuenta</span>
-    </a>
-</nav>
-</body>
-  
-</body>
-</body>
 
+    <!-- BUSCADOR INTERACTIVO JS -->
+    <script>
+    // Sistema de búsqueda interactivo
+    document.addEventListener('DOMContentLoaded', function() {
+        // Elementos del DOM
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        const showAllLink = document.getElementById('show-all-link');
+        const listaNegocios = document.getElementById('listaNegocios');
+        const contadorNumero = document.getElementById('contadorNumero');
+        const contadorTexto = document.getElementById('contadorTexto');
+        
+        // Cargar negocios desde negocios.js
+        let allBusinesses = [];
+        
+        // Esperar a que cargue negocios.js
+        setTimeout(() => {
+            if (window.negociosMacas && Array.isArray(window.negociosMacas)) {
+                allBusinesses = window.negociosMacas;
+                console.log(`✅ Cargados ${allBusinesses.length} negocios de Macas`);
+                
+                // Mostrar todos los negocios inicialmente
+                displayBusinesses(allBusinesses);
+                
+                // Configurar eventos
+                setupSearchEvents();
+            } else {
+                console.log("⚠️ No se encontraron negocios, usando datos de ejemplo");
+                loadSampleBusinesses();
+                setupSearchEvents();
+            }
+        }, 500);
+        
+        // Función para cargar datos de ejemplo
+        function loadSampleBusinesses() {
+            allBusinesses = [
+                {
+                    id: 1,
+                    nombre: "Zapatería Colombiano",
+                    categoria: "Reparación de Calzado",
+                    descripcion: "¡FUNDADOR DE MACASCONECTA! 🌟 35 años reparando el calzado de Macas. Especialista en cuero, cambio de suelas y arreglos urgentes.",
+                    ubicacion: "Macas Centro, a lado de la cooperativa JEP",
+                    telefono: "0987654321",
+                    horario: "Lun-Sáb: 8:00-18:00",
+                    fundador: true
+                },
+                {
+                    id: 2,
+                    nombre: "Restaurante El Sabor de Macas",
+                    categoria: "Restaurante",
+                    descripcion: "Comida típica amazónica en un ambiente familiar. Especialidades en maito de pescado y chontacuro.",
+                    ubicacion: "Av. Amazonas, frente al parque central",
+                    telefono: "0912345678",
+                    horario: "Todos los días: 7:00-22:00"
+                },
+                {
+                    id: 3,
+                    nombre: "Farmacia Santa Marianita",
+                    categoria: "Farmacia",
+                    descripcion: "Atención 24/7. Entrega a domicilio gratuita en el centro de Macas.",
+                    ubicacion: "Av. 10 de Agosto",
+                    telefono: "0923456789",
+                    horario: "24 horas"
+                }
+            ];
+            displayBusinesses(allBusinesses);
+        }
+        
+        // Configurar eventos de búsqueda
+        function setupSearchEvents() {
+            // Botón de búsqueda
+            searchButton.addEventListener('click', performSearch);
+            
+            // Enter en el input
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // "Ver todas las categorías"
+            showAllLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                showAllBusinesses();
+            });
+        }
+        
+        // Función de búsqueda
+        function performSearch() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            
+            if (searchTerm === '') {
+                showAllBusinesses();
+                return;
+            }
+            
+            // Filtrar negocios
+            const filteredBusinesses = allBusinesses.filter(business => {
+                return business.nombre.toLowerCase().includes(searchTerm) ||
+                       business.categoria.toLowerCase().includes(searchTerm) ||
+                       (business.descripcion && business.descripcion.toLowerCase().includes(searchTerm));
+            });
+            
+            displayBusinesses(filteredBusinesses, searchTerm);
+        }
+        
+        // Función para mostrar todos los negocios
+        function showAllBusinesses() {
+            searchInput.value = '';
+            displayBusinesses(allBusinesses);
+        }
+        
+        // Función para mostrar negocios
+        function displayBusinesses(businesses, searchTerm = '') {
+            // Limpiar lista
+            listaNegocios.innerHTML = '';
+            
+            // Actualizar contador
+            contadorNumero.textContent = businesses.length;
+            
+            if (businesses.length === 1) {
+                contadorTexto.textContent = 'negocio disponible';
+            } else {
+                contadorTexto.textContent = 'negocios disponibles';
+            }
+            
+            if (businesses.length === 0) {
+                // NO hay resultados
+                listaNegocios.innerHTML = `
+                    <div class="sin-resultados">
+                        <i class="fas fa-search fa-3x"></i>
+                        <h3>No encontramos resultados</h3>
+                        <p>No hay negocios que coincidan con "${searchTerm}"</p>
+                        <button class="btn-ver-todos" id="btnVerTodos">
+                            <i class="fas fa-list"></i> Ver todos los negocios
+                        </button>
+                    </div>
+                `;
+                
+                // Agregar evento al botón
+                document.getElementById('btnVerTodos').addEventListener('click', showAllBusinesses);
+                
+                // Mostrar todos los negocios de fondo
+                allBusinesses.forEach(business => {
+                    listaNegocios.appendChild(createBusinessCard(business));
+                });
+            } else {
+                // Sí hay resultados
+                businesses.forEach(business => {
+                    listaNegocios.appendChild(createBusinessCard(business));
+                });
+                
+                // Si hay búsqueda, mostrar mensaje
+                if (searchTerm) {
+                    const mensajeBusqueda = document.createElement('div');
+                    mensajeBusqueda.className = 'mensaje-busqueda';
+                    mensajeBusqueda.innerHTML = `
+                        <p><i class="fas fa-search"></i> Mostrando ${businesses.length} resultado${businesses.length !== 1 ? 's' : ''} para "${searchTerm}"</p>
+                    `;
+                    listaNegocios.insertBefore(mensajeBusqueda, listaNegocios.firstChild);
+                }
+            }
+        }
+        
+        // Función para crear tarjeta de negocio
+        function createBusinessCard(business) {
+            const card = document.createElement('div');
+            card.className = 'negocio-card';
+            
+            card.innerHTML = `
+                <div class="negocio-header">
+                    <span class="negocio-categoria">${business.categoria}</span>
+                    ${business.fundador ? '<span class="negocio-fundador">🌟 FUNDADOR</span>' : ''}
+                </div>
+                <div class="negocio-body">
+                    <h3 class="negocio-nombre">${business.nombre}</h3>
+                    <p class="negocio-descripcion">${business.descripcion || ''}</p>
+                    <div class="negocio-detalles">
+                        <p><i class="fas fa-map-marker-alt"></i> ${business.ubicacion}</p>
+                        ${business.telefono ? `<p><i class="fas fa-phone"></i> ${business.telefono}</p>` : ''}
+                        ${business.horario ? `<p><i class="fas fa-clock"></i> ${business.horario}</p>` : ''}
+                    </div>
+                </div>
+                <div class="negocio-footer">
+                    <button class="btn-contactar" onclick="contactarNegocio('${business.telefono || ''}')">
+                        <i class="fab fa-whatsapp"></i> Contactar
+                    </button>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        // Función para contactar negocio (WhatsApp)
+        window.contactarNegocio = function(telefono) {
+            if (telefono && telefono.trim() !== '') {
+                const mensaje = `Hola, vi tu negocio en MacasConecta y me interesa...`;
+                const url = `https://wa.me/593${telefono.replace(/\D/g, '')}?text=${encodeURIComponent(mensaje)}`;
+                window.open(url, '_blank');
+            } else {
+                alert('Este negocio no tiene número de contacto registrado.');
+            }
+        };
+    });
+    </script>
+
+    <!-- ESTILOS PARA EL BUSCADOR (añade esto a tu style.css) -->
+    <style>
+    /* BUSCADOR INTERACTIVO */
+    .buscador-interactivo {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 800px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+    
+    .buscador-contenedor {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .buscador-input {
+        flex: 1;
+        padding: 14px 18px;
+        border: 2px solid #e1e5eb;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s;
+    }
+    
+    .buscador-input:focus {
+        border-color: #28a745;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+    }
+    
+    .buscador-boton {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 14px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 16px;
+        transition: background 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .buscador-boton:hover {
+        background: #218838;
+    }
+    
+    .categorias-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #28a745;
+        text-decoration: none;
+        font-weight: 600;
+        margin: 10px 0 20px;
+        font-size: 16px;
+    }
+    
+    .categorias-link:hover {
+        text-decoration: underline;
+    }
+    
+    /* CONTADOR */
+    .contador-negocios {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        margin-top: 15px;
+        border: 1px solid #e9ecef;
+    }
+    
+    /* MENSAJES DE BÚSQUEDA */
+    .sin-resultados {
+        text-align: center;
+        padding: 40px 20px;
+        background: #f8f9fa;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        border: 2px dashed #dee2e6;
+    }
+    
+    .sin-resultados i {
+        color: #6c757d;
+        margin-bottom: 15px;
+    }
+    
+    .sin-resultados h3 {
+        color: #dc3545;
+        margin-bottom: 10px;
+    }
+    
+    .btn-ver-todos {
+        background: #17a2b8;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 15px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+    }
+    
+    .mensaje-busqueda {
+        background: #e8f4ff;
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        color: #0056b3;
+        font-weight: 500;
+    }
+    
+    /* TARJETA DE NEGOCIO */
+    .negocio-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+        border: 1px solid #e9ecef;
+    }
+    
+    .negocio-header {
+        background: #f8f9fa;
+        padding: 12px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .negocio-categoria {
+        color: #007bff;
+        font-weight: 600;
+        font-size: 14px;
+    }
+    
+    .negocio-fundador {
+        background: linear-gradient(135deg, #FFD700, #FFA500);
+        color: #333;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .negocio-body {
+        padding: 20px;
+    }
+    
+    .negocio-nombre {
+        color: #2c3e50;
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+    
+    .negocio-descripcion {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+    
+    .negocio-detalles {
+        color: #6c757d;
+        font-size: 14px;
+    }
+    
+    .negocio-detalles p {
+        margin: 5px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .negocio-footer {
+        padding: 15px 20px;
+        background: #f8f9fa;
+        border-top: 1px solid #e9ecef;
+        text-align: center;
+    }
+    
+    .btn-contactar {
+        background: #25d366;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.3s;
+    }
+    
+    .btn-contactar:hover {
+        background: #1da851;
+    }
+    </style>
+</body>
+</html>

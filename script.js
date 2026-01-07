@@ -1088,3 +1088,55 @@ if (window.location.pathname.includes('dm.html')) {
         console.log("✅ Mejoras DM aplicadas correctamente");
     }, 1000);
 }
+// Función para buscar negocios
+function searchBusinesses() {
+  const searchInput = document.getElementById('search-input');
+  const searchTerm = searchInput.value.toLowerCase().trim();
+  const resultsContainer = document.getElementById('results-container');
+  
+  // Obtén los negocios REALES de tu base de datos
+  // Reemplaza esto con tu llamada AJAX real:
+  // const allBusinesses = obtenerNegociosDeBaseDeDatos();
+  
+  const matchingBusinesses = allBusinesses.filter(business => 
+    business.nombre.toLowerCase().includes(searchTerm) || 
+    business.categoria.toLowerCase().includes(searchTerm)
+  );
+  
+  resultsContainer.innerHTML = '';
+  
+  if (matchingBusinesses.length > 0) {
+    // Mostrar solo coincidencias
+    matchingBusinesses.forEach(negocio => {
+      const negocioHTML = `
+        <div class="negocio">
+          <h3>${negocio.nombre}</h3>
+          <p>${negocio.categoria}</p>
+        </div>
+      `;
+      resultsContainer.innerHTML += negocioHTML;
+    });
+  } else {
+    // Mostrar mensaje + TODOS los negocios
+    resultsContainer.innerHTML = `
+      <p class="no-results">No encontramos negocios que coincidan con "${searchTerm}"</p>
+      <h3>Mostrando todos los negocios:</h3>
+    `;
+    
+    allBusinesses.forEach(negocio => {
+      const negocioHTML = `
+        <div class="negocio">
+          <h3>${negocio.nombre}</h3>
+          <p>${negocio.categoria}</p>
+        </div>
+      `;
+      resultsContainer.innerHTML += negocioHTML;
+    });
+  }
+}
+
+// Función para mostrar todos
+function showAllBusinesses() {
+  document.getElementById('search-input').value = '';
+  searchBusinesses();
+}
