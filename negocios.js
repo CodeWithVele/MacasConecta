@@ -210,3 +210,7 @@ const negocios = [
 
 console.log(`✅ ${negocios.length} negocios cargados correctamente`);
 window.negocios = negocios;
+
+
+//🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣 
+
