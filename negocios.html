@@ -10,6 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
+            padding-bottom: 60px; /* Espacio para navegación inferior */
         }
         
         .container {
@@ -42,49 +43,30 @@
             padding: 12px 20px;
             border-radius: 8px;
             cursor: pointer;
+            font-weight: bold;
         }
         
         .categories-link {
             color: #4CAF50;
             text-decoration: none;
             font-size: 14px;
+            display: inline-block;
+            margin-top: 10px;
         }
         
-        .business-list {
-            margin-top: 20px;
-        }
-        
-        .no-results {
-            text-align: center;
-            padding: 40px 20px;
+        .section-title {
             color: #666;
+            font-size: 14px;
+            margin: 20px 0 10px 0;
         }
         
-        .nav-bottom {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            border-top: 1px solid #ddd;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px;
-        }
-        
-        .nav-item {
-            text-align: center;
-            color: #666;
-            text-decoration: none;
-            font-size: 12px;
-        }
-        
-        /* ESTILOS ORIGINALES QUE TENÍAS */
+        /* TARJETA DE NEGOCIO - SIEMPRE VISIBLE */
         .business-card {
             background: #f8f9fa;
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 15px;
+            border-left: 4px solid #4CAF50;
         }
         
         .business-header {
@@ -106,11 +88,13 @@
             padding: 4px 8px;
             border-radius: 4px;
             font-size: 12px;
+            font-weight: bold;
         }
         
         .business-info {
             color: #666;
             margin-bottom: 15px;
+            line-height: 1.5;
         }
         
         .business-details {
@@ -123,12 +107,13 @@
         .detail-row {
             margin-bottom: 8px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
         }
         
         .detail-icon {
             width: 20px;
             color: #4CAF50;
+            margin-right: 8px;
         }
         
         .services {
@@ -159,33 +144,115 @@
             text-decoration: none;
             font-weight: bold;
             color: white;
+            transition: opacity 0.3s;
+        }
+        
+        .action-btn:hover {
+            opacity: 0.9;
         }
         
         .btn-call { background: #4CAF50; }
         .btn-whatsapp { background: #25D366; }
         .btn-map { background: #2196F3; }
         .btn-dm { background: #9C27B0; }
+        
+        /* MENSAJE DE BÚSQUEDA */
+        .search-message {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            color: #856404;
+        }
+        
+        .search-message h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        
+        .search-message p {
+            margin: 10px 0;
+        }
+        
+        .show-all-btn {
+            display: inline-block;
+            background: #6c757d;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+        
+        /* NAVEGACIÓN INFERIOR */
+        .nav-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item {
+            text-align: center;
+            color: #666;
+            text-decoration: none;
+            font-size: 12px;
+            flex: 1;
+        }
+        
+        .nav-item.active {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        /* RESULTADOS VACÍOS */
+        .no-results {
+            display: none; /* OCULTO POR DEFECTO */
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="search-section">
-            <h2>CONECTAR MI NEGOCIO</h2>
+            <h2 style="color: #333; margin-bottom: 20px;">CONECTAR MI NEGOCIO</h2>
             
             <div class="search-box">
-                <input type="text" class="search-input" placeholder="Ej: farmacia, gas, taxi, panadería...">
-                <button class="search-btn">Buscar</button>
+                <input type="text" class="search-input" placeholder="Ej: farmacia, gas, taxi, panadería..." 
+                       id="searchInput" autocomplete="off">
+                <button class="search-btn" id="searchBtn">Buscar</button>
             </div>
             
-            <a href="#" class="categories-link">📌 Ver todas las categorías</a>
+            <a href="#" class="categories-link" id="categoriesLink">📌 Ver todas las categorías</a>
         </div>
         
-        <div class="business-list">
-            <!-- NEGOCIO DISPONIBLE - Zapatería Colombiano -->
-            <div class="business-card">
+        <!-- MENSAJE DE BÚSQUEDA (aparece solo cuando buscan algo diferente) -->
+        <div class="search-message" id="searchMessage" style="display: none;">
+            <h3>🔍 Buscando: "<span id="currentSearch"></span>"</h3>
+            <p>Por ahora solo tenemos la <strong>Zapatería Colombiano</strong>.</p>
+            <p>¿Quieres agregar tu negocio de "<span id="searchCategory"></span>"?</p>
+            <a href="agregar.html" class="show-all-btn">➕ Agregar mi negocio</a>
+        </div>
+        
+        <!-- SECCIÓN: NEGOCIOS DISPONIBLES (SIEMPRE VISIBLE) -->
+        <div class="section-title" id="availableTitle">negocios disponibles</div>
+        
+        <div class="business-list" id="businessList">
+            <!-- ZAPATERÍA COLOMBIANO - SIEMPRE VISIBLE -->
+            <div class="business-card" id="zapateriaCard">
                 <div class="business-header">
                     <div class="business-name">Zapatería Colombiano</div>
-                    <div class="business-badge">⭐ FUNDADOR</div>
+                    <div class="business-badge">⭐ FUNDADOR DE MACASCONECTA</div>
                 </div>
                 
                 <p class="business-info">35 años reparando el calzado de Macas. Especialista en cuero, cambio de suelas y arreglos urgentes.</p>
@@ -193,19 +260,19 @@
                 <div class="business-details">
                     <div class="detail-row">
                         <span class="detail-icon">📍</span>
-                        <strong>Ubicación:</strong> Macas Centro, a lado de la cooperativa JEP
+                        <div><strong>Ubicación:</strong> Macas Centro, a lado de la cooperativa JEP</div>
                     </div>
                     <div class="detail-row">
                         <span class="detail-icon">🕐</span>
-                        <strong>Horario:</strong> Lun-Sáb: 8:00 - 20:00 | Dom: 9:00 - 15:00
+                        <div><strong>Horario:</strong> Lun-Sáb: 8:00 - 20:00 | Dom: 9:00 - 15:00</div>
                     </div>
                     <div class="detail-row">
                         <span class="detail-icon">📞</span>
-                        <strong>Teléfono:</strong> 0981342236
+                        <div><strong>Teléfono:</strong> 0981342236</div>
                     </div>
                     <div class="detail-row">
                         <span class="detail-icon">💬</span>
-                        <strong>WhatsApp:</strong> 593981342236
+                        <div><strong>WhatsApp:</strong> 593981342236</div>
                     </div>
                 </div>
                 
@@ -223,55 +290,138 @@
                     <a href="tel:0981342236" class="action-btn btn-call">LLAMAR</a>
                     <a href="https://wa.me/593981342236" class="action-btn btn-whatsapp">WHATSAPP</a>
                     <a href="mapa.html?negocio=zapateria" class="action-btn btn-map">VER MAPA</a>
-                    <a href="dm.html?negocio=zapateria" class="action-btn btn-dm">DM</a>
+                    <a href="dm.html?negocio=zapateria" class="action-btn btn-dm">CONTACTAR</a>
                 </div>
             </div>
         </div>
         
-        <div class="no-results" style="display: none;">
+        <!-- MENSAJE "No encontramos resultados" (OCULTO POR DEFECTO) -->
+        <div class="no-results" id="noResults">
             <h3>No encontramos resultados</h3>
-            <p>No hay negocios que coincidan con "<span id="search-term"></span>"</p>
+            <p>No hay negocios que coincidan con "<span id="searchTerm"></span>"</p>
+            <a href="#" onclick="mostrarTodos()" class="show-all-btn">Ver todos los negocios</a>
         </div>
     </div>
     
+    <!-- NAVEGACIÓN INFERIOR -->
     <div class="nav-bottom">
         <a href="index.html" class="nav-item">Inicio</a>
         <a href="mapa.html" class="nav-item">Mapa</a>
-        <a href="dm.html" class="nav-item">DM</a>
+        <a href="negocios.html" class="nav-item active">Negocios</a>
         <a href="alerta.html" class="nav-item">Alertas</a>
         <a href="cuenta.html" class="nav-item">Cuenta</a>
     </div>
     
     <script>
-        // FUNCIÓN ORIGINAL DE BÚSQUEDA - MANTIENE ZAPATERÍA VISIBLE
-        document.querySelector('.search-btn').addEventListener('click', buscar);
-        document.querySelector('.search-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') buscar();
-        });
+        // ELEMENTOS DEL DOM
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const categoriesLink = document.getElementById('categoriesLink');
+        const zapateriaCard = document.getElementById('zapateriaCard');
+        const searchMessage = document.getElementById('searchMessage');
+        const currentSearch = document.getElementById('currentSearch');
+        const searchCategory = document.getElementById('searchCategory');
+        const noResults = document.getElementById('noResults');
+        const searchTerm = document.getElementById('searchTerm');
+        const availableTitle = document.getElementById('availableTitle');
         
+        // FUNCIÓN DE BÚSQUEDA MEJORADA
         function buscar() {
-            const input = document.querySelector('.search-input').value.toLowerCase();
-            const businessCard = document.querySelector('.business-card');
-            const noResults = document.querySelector('.no-results');
-            const searchTerm = document.getElementById('search-term');
+            const termino = searchInput.value.trim().toLowerCase();
             
-            // SIEMPRE mostrar la zapatería
-            businessCard.style.display = 'block';
+            // LA ZAPATERÍA SIEMPRE SE VE
+            zapateriaCard.style.display = 'block';
+            availableTitle.style.display = 'block';
+            noResults.style.display = 'none';
             
-            if (input === '' || input.includes('zapater') || input.includes('repar') || input.includes('calzado')) {
-                noResults.style.display = 'none';
-            } else {
-                // Mostrar mensaje pero MANTENER la zapatería visible
-                searchTerm.textContent = input;
+            if (termino === '') {
+                // BÚSQUEDA VACÍA: mostrar todo normal
+                searchMessage.style.display = 'none';
+            } 
+            else if (termino.includes('zapater') || termino.includes('repar') || termino.includes('calzado') || 
+                     termino.includes('suela') || termino.includes('cuero') || termino.includes('tacón')) {
+                // BUSCÓ ALGO RELACIONADO CON ZAPATERÍA
+                searchMessage.style.display = 'none';
+                showNotification(`✅ Encontramos la Zapatería Colombiano para "${termino}"`);
+            }
+            else {
+                // BUSCÓ ALGO DIFERENTE (taxi, motos, electrónica, etc.)
+                currentSearch.textContent = termino;
+                searchCategory.textContent = termino;
+                searchMessage.style.display = 'block';
+                
+                // También mostrar mensaje tradicional
+                searchTerm.textContent = termino;
                 noResults.style.display = 'block';
+                
+                showNotification(`🔍 Buscando "${termino}"... Pronto tendremos más negocios en MacasConecta`);
             }
         }
         
-        // Ver todas las categorías
-        document.querySelector('.categories-link').addEventListener('click', function(e) {
+        // FUNCIÓN PARA MOSTRAR TODOS
+        function mostrarTodos() {
+            searchInput.value = '';
+            searchMessage.style.display = 'none';
+            noResults.style.display = 'none';
+            zapateriaCard.style.display = 'block';
+            availableTitle.style.display = 'block';
+            showNotification('Mostrando todos los negocios disponibles');
+        }
+        
+        // VER TODAS LAS CATEGORÍAS
+        categoriesLink.addEventListener('click', function(e) {
             e.preventDefault();
-            alert('Próximamente: Restaurantes, Farmacias, Supermercados, Talleres, etc.');
+            showNotification('📋 Categorías próximas: Restaurantes, Farmacias, Supermercados, Talleres, Transporte, Salud, Educación');
         });
+        
+        // EVENT LISTENERS
+        searchBtn.addEventListener('click', buscar);
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') buscar();
+        });
+        
+        // NOTIFICACIÓN TEMPORAL
+        function showNotification(mensaje) {
+            // Crear notificación
+            const notification = document.createElement('div');
+            notification.textContent = mensaje;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0,0,0,0.8);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                z-index: 1000;
+                font-size: 14px;
+                animation: fadeInOut 3s ease;
+            `;
+            
+            // Animación
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0% { opacity: 0; top: 10px; }
+                    10% { opacity: 1; top: 20px; }
+                    90% { opacity: 1; top: 20px; }
+                    100% { opacity: 0; top: 10px; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            // Eliminar después de 3 segundos
+            setTimeout(() => {
+                notification.remove();
+                style.remove();
+            }, 3000);
+        }
+        
+        // INICIALIZAR
+        mostrarTodos();
     </script>
 </body>
 </html>
