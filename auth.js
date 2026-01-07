@@ -1,6 +1,10 @@
 // auth.js - Sistema de autenticación independiente por sección
 console.log("🔐 Sistema de autenticación cargado");
 
+// Usar tu contraseña original
+const CONTRASEÑA_MAESTRA = "macas2024"; 
+
+// Permisos por sección
 const permisosPorSeccion = {
     'dm': false,
     'alertas': false,
@@ -9,16 +13,7 @@ const permisosPorSeccion = {
     'ubicacion': false
 };
 
-// CONTRASEÑAS (¡CÁMBIALAS POR UNAS MÁS SEGURAS!)
-const contraseñas = {
-    'dm': 'dm123',
-    'alertas': 'alert456',
-    'cuenta': 'cuenta789',
-    'telefonos': 'tel123',
-    'ubicacion': 'ubi456'
-};
-
-// Verificar acceso a una sección específica
+// Función principal de verificación
 function verificarAcceso(seccion) {
     console.log(`🔐 Verificando acceso a: ${seccion}`);
     
@@ -39,10 +34,10 @@ function verificarAcceso(seccion) {
     const password = prompt(
         `🔒 ACCESO PRIVADO - ${seccion.toUpperCase()}\n\n` +
         `Ingresa la contraseña para acceder a esta sección:\n` +
-        `(Prueba con: ${contraseñas[seccion]})`
+        `(Contraseña: ${CONTRASEÑA_MAESTRA})`
     );
     
-    if (password === contraseñas[seccion]) {
+    if (password === CONTRASEÑA_MAESTRA) {
         // Acceso concedido
         permisosPorSeccion[seccion] = true;
         localStorage.setItem(`permiso_${seccion}`, 'true');
@@ -56,6 +51,28 @@ function verificarAcceso(seccion) {
         alert('❌ Contraseña incorrecta. Acceso denegado.');
         return false;
     }
+}
+
+// Función para dar acceso rápido desde index.html
+function darAccesoRapido() {
+    const confirmar = confirm("¿Quieres acceder a todas las secciones privadas?\n\nSe habilitarán DM, Alertas y Mi Cuenta.");
+    
+    if (confirmar) {
+        const password = prompt("Ingresa la contraseña de MacasConecta:");
+        
+        if (password === CONTRASEÑA_MAESTRA) {
+            ['dm', 'alertas', 'cuenta'].forEach(seccion => {
+                permisosPorSeccion[seccion] = true;
+                localStorage.setItem(`permiso_${seccion}`, 'true');
+            });
+            alert('✅ ¡Acceso concedido a todas las secciones!');
+            return true;
+        } else {
+            alert('❌ Contraseña incorrecta');
+            return false;
+        }
+    }
+    return false;
 }
 
 // Cargar permisos guardados al iniciar
@@ -81,9 +98,9 @@ function cerrarSesion(seccion) {
         console.log(`🔓 Sesión cerrada para ${seccion}`);
         alert(`🔓 Sesión cerrada para ${seccion}. Necesitarás la contraseña para volver a acceder.`);
         
-        // Recargar para actualizar estado
-        setTimeout(() => location.reload(), 1000);
+        return true;
     }
+    return false;
 }
 
 // Cerrar todas las sesiones
@@ -93,8 +110,14 @@ function cerrarTodasLasSesiones() {
             localStorage.removeItem(`permiso_${seccion}`);
         });
         alert('✅ Todas las sesiones cerradas.');
-        location.reload();
+        return true;
     }
+    return false;
+}
+
+// Verificar si ya tiene algún acceso
+function tieneAlgunAcceso() {
+    return permisosPorSeccion.dm || permisosPorSeccion.alertas || permisosPorSeccion.cuenta;
 }
 
 // Inicializar al cargar la página
@@ -102,6 +125,9 @@ document.addEventListener('DOMContentLoaded', cargarPermisos);
 
 // Exportar funciones para usar en otros archivos
 window.verificarAcceso = verificarAcceso;
+window.darAccesoRapido = darAccesoRapido;
 window.cerrarSesion = cerrarSesion;
 window.cerrarTodasLasSesiones = cerrarTodasLasSesiones;
+window.tieneAlgunAcceso = tieneAlgunAcceso;
 window.permisosPorSeccion = permisosPorSeccion;
+window.CONTRASEÑA_MAESTRA = CONTRASEÑA_MAESTRA;

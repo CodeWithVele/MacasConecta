@@ -941,3 +941,33 @@ html {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
+
+/* CORREGIDO */
+
+.btn-ver-categorias {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.btn-ver-categorias:hover {
+    background: #45a049;
+}
+
+.link-categorias {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.link-categorias:hover {
+    color: #0056b3;
+}

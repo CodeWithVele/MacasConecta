@@ -3,429 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DM - MacasConecta</title>
+    <title>Mensajes Directos - MacasConecta</title>
+    
+    <!-- META PWA -->
+    <meta name="theme-color" content="#6a11cb">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Estilos principales -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- VERIFICACIÓN DE ACCESO -->
-    <script src="auth.js"></script>
-    <script src="negocios.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        if (!verificarAcceso('dm')) {
-            alert('🔒 Necesitas acceso para usar Mensajes Directos');
-            window.location.href = 'index.html';
-        }
-        // Cargar negocios desde negocios.js
-        cargarNegociosDM();
-    });
-    </script>
-    
+    <!-- ENCABEZADO -->
     <header class="main-header" style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
-        <div class="header-content">
+        <div class="header-content" style="justify-content: flex-start; padding-left: 20px;">
             <a href="index.html" style="color: white; text-decoration: none; margin-right: 15px;">
                 <i class="fas fa-arrow-left"></i>
             </a>
-            <div class="header-text">
+            <div class="header-text" style="text-align: left;">
                 <h1 class="app-title">Mensajes Directos</h1>
-                <p class="app-subtitle">Comunícate con negocios de Macas</p>
+                <p class="app-subtitle">Conéctate con negocios de Macas</p>
             </div>
         </div>
     </header>
-    
-    <main style="padding: 20px; max-width: 800px; margin: 0 auto;">
-    
-    <!-- HERO SECTION -->
-    <div style="text-align: center; margin-bottom: 40px; padding: 30px 20px; background: linear-gradient(135deg, #f8f9ff, #eef2ff); border-radius: 20px;">
-        <i class="fas fa-comments" style="font-size: 80px; color: #6a11cb; margin-bottom: 15px;"></i>
-        <h1 style="color: #333; margin-bottom: 10px;">💬 Chatea Directo</h1>
-        <p style="color: #666; margin-bottom: 25px; font-size: 18px;">
-            Envía mensajes a negocios de Macas al instante
-        </p>
-        
-        <button onclick="chatearConTodos()" style="
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            color: white;
-            border: none;
-            padding: 20px 40px;
-            border-radius: 50px;
-            font-size: 20px;
-            font-weight: bold;
-            margin: 20px 0;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
-            transition: all 0.3s ease;
-        " onmouseover="this.style.transform='scale(1.05)';" 
-           onmouseout="this.style.transform='scale(1)';">
-            <i class="fas fa-comments" style="font-size: 24px;"></i>
-            Chatear 
-            <span id="contador-chatear-grande" style="
-                background: white;
-                color: #6a11cb;
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                margin-left: 10px;
-                font-size: 18px;
-                font-weight: bold;
-            ">0</span>
-        </button>
-        
-        <p style="color: #888; font-size: 14px; margin-top: 15px;">
-            <i class="fas fa-info-circle"></i> Selecciona los negocios que quieras contactar
-        </p>
-    </div>
-    
-    <!-- SECCIÓN DE NEGOCIOS -->
-    <section style="margin-bottom: 40px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h2 style="color: #333; margin: 0;">
-                <i class="fas fa-store"></i> Negocios Disponibles
-                <small style="font-size: 14px; color: #666; margin-left: 10px;">
-                    (<span id="total-negocios">0</span> disponibles)
-                </small>
-            </h2>
-            <span id="contador-negocios" style="background: #6c757d; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold;">
-                0 seleccionados
-            </span>
-        </div>
-        
-        <!-- AQUÍ SE CARGAN LOS NEGOCIOS DINÁMICAMENTE -->
-        <div id="lista-negocios-dm"></div>
-    </section>
 
-    <!-- BOTÓN CHATEAR -->
-    <div style="margin: 30px 0; text-align: center;">
-        <button onclick="chatearConTodos()" style="
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            color: white;
-            border: none;
-            padding: 18px 40px;
-            border-radius: 15px;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
-            transition: all 0.3s ease;
-            width: 100%;
-            max-width: 400px;
-        " onmouseover="this.style.transform='scale(1.05)';" 
-           onmouseout="this.style.transform='scale(1)';">
-            <i class="fas fa-comments"></i>
-            Enviar Mensaje a 
-            <span id="contador-chatear" style="
-                background: white;
-                color: #6a11cb;
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-left: 10px;
-                font-size: 18px;
-                font-weight: bold;
-            ">0</span>
-            negocio(s)
-        </button>
-    </div>
-
-    <!-- SECCIÓN RÁPIDA -->
-    <div style="background: #f8f9ff; padding: 25px; border-radius: 20px; border: 2px dashed #6a11cb; margin-bottom: 40px;">
-        <h3 style="color: #6a11cb; margin-bottom: 15px;">
-            <i class="fas fa-bolt"></i> Mensajes Rápidos
-        </h3>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="lista-negocios" style="padding: 20px; padding-bottom: 100px;">
         
-        <button onclick="enviarMensajePredeterminado('disponibilidad')" style="
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0;
-            width: 100%;
-        ">
-            <i class="fas fa-question-circle"></i>
-            "¿Tienen disponibilidad ahora?"
-        </button>
-        
-        <button onclick="enviarMensajePredeterminado('precio')" style="
-            background: #ff9800;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0;
-            width: 100%;
-        ">
-            <i class="fas fa-tag"></i>
-            "¿Cuál es su precio?"
-        </button>
-        
-        <button onclick="enviarMensajePredeterminado('info')" style="
-            background: #6a11cb;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0;
-            width: 100%;
-        ">
-            <i class="fas fa-info-circle"></i>
-            "Me gustaría más información"
-        </button>
-    </div>
-    
-    <!-- INSTRUCCIONES -->
-    <div style="background: #fff8e1; padding: 20px; border-radius: 15px; border-left: 5px solid #ff9800; margin-top: 40px;">
-        <h4 style="color: #ff9800; margin-top: 0;">
-            <i class="fas fa-lightbulb"></i> ¿Cómo funciona?
-        </h4>
-        <ol style="color: #666; margin-bottom: 0;">
-            <li>Selecciona los negocios con los que quieres contactar</li>
-            <li>Escribe tu mensaje o usa uno de los mensajes rápidos</li>
-            <li>Los negocios recibirán tu mensaje por WhatsApp</li>
-            <li>Ellos te contactarán directamente</li>
-        </ol>
-    </div>
-    
-    </main>
-
-    <!-- SCRIPT PRINCIPAL -->
-    <script>
-// Array de negocios (se carga desde negocios.js)
-let negociosDM = [];
-
-// CARGAR NEGOCIOS EN LA LISTA
-function cargarNegociosDM() {
-    // Obtener negocios desde negocios.js
-    if (typeof obtenerNegociosDM === 'function') {
-        negociosDM = obtenerNegociosDM();
-    } else {
-        // Fallback si no existe la función
-        console.warn('Usando datos de respaldo...');
-        negociosDM = window.negocios || [];
-    }
-    
-    const contenedor = document.getElementById('lista-negocios-dm');
-    const contador = document.getElementById('contador-negocios');
-    const contadorChat = document.getElementById('contador-chatear');
-    const contadorGrande = document.getElementById('contador-chatear-grande');
-    const totalNegocios = document.getElementById('total-negocios');
-    
-    if (!contenedor) return;
-    
-    contenedor.innerHTML = '';
-    let totalSeleccionados = 0;
-    
-    // Actualizar total
-    if (totalNegocios) {
-        totalNegocios.textContent = negociosDM.length;
-    }
-    
-    negociosDM.forEach(negocio => {
-        totalSeleccionados += negocio.seleccionado ? 1 : 0;
-        
-        // Determinar color según categoría
-        let colorIcono = negocio.color || '#6a11cb';
-        
-        const negocioHTML = `
-            <div class="tarjeta-negocio-dm" style="
-                background: white;
-                border-radius: 15px;
-                padding: 20px;
-                margin-bottom: 15px;
-                display: flex;
-                align-items: center;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-                border-left: 6px solid ${negocio.mensajesPendientes > 0 ? colorIcono : '#ddd'};
-                transition: all 0.3s ease;
-            " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.12)';" 
-               onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.08)';">
-                <div style="display: flex; align-items: center; gap: 15px; flex: 1;">
-                    <input type="checkbox" 
-                           id="negocio-${negocio.id}" 
-                           ${negocio.seleccionado ? 'checked' : ''}
-                           onchange="toggleNegocio(${negocio.id})"
-                           style="width: 22px; height: 22px; cursor: pointer; accent-color: ${colorIcono};">
-                    
-                    <div style="background: ${colorIcono}20; width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                        <i class="${negocio.icono}" style="font-size: 26px; color: ${colorIcono};"></i>
-                    </div>
-                    
-                    <div style="flex: 1;">
-                        <h3 style="margin: 0; color: #333; font-size: 18px; display: flex; align-items: center; gap: 8px;">
-                            ${negocio.nombre}
-                            ${negocio.featured ? '<span style="background: #ffd700; color: #333; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: bold;">⭐</span>' : ''}
-                        </h3>
-                        <p style="margin: 5px 0; color: #666; font-size: 14px;">
-                            <i class="fas fa-tag"></i> ${negocio.categoria}
-                        </p>
-                        <p style="margin: 0; color: #888; font-size: 13px;">
-                            <i class="fas fa-phone"></i> ${negocio.telefono}
-                        </p>
-                    </div>
-                </div>
+        <!-- HERO SECTION -->
+        <section class="hero-dm">
+            <div class="hero-content">
+                <i class="fas fa-comments hero-icon"></i>
+                <h1 class="hero-title">💬 Chatea Directo</h1>
+                <p class="hero-subtitle">Envía mensajes a negocios de Macas al instante</p>
                 
-                <div style="text-align: right;">
-                    ${negocio.mensajesPendientes > 0 ? 
-                        `<span style="background: ${colorIcono}; color: white; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: bold; display: inline-block; margin-bottom: 8px;">
-                            ${negocio.mensajesPendientes} 📩
-                        </span>` : ''
-                    }
-                    
-                    <button onclick="abrirChatIndividual(${negocio.id})" style="
-                        background: ${colorIcono};
-                        color: white;
-                        border: none;
-                        padding: 10px 20px;
-                        border-radius: 10px;
-                        cursor: pointer;
-                        font-weight: bold;
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        transition: all 0.3s ease;
-                    " onmouseover="this.style.opacity='0.9'; this.style.transform='scale(1.05)';"
-                       onmouseout="this.style.opacity='1'; this.style.transform='scale(1)';">
-                        <i class="fas fa-comment"></i> Chatear
-                    </button>
-                </div>
+                <button onclick="chatearConTodos()" class="btn-hero">
+                    <i class="fas fa-comments"></i>
+                    Chatear 
+                    <span id="contador-chatear-grande" class="contador-hero">0</span>
+                </button>
+                
+                <p class="hero-info">
+                    <i class="fas fa-info-circle"></i> Selecciona los negocios que quieras contactar
+                </p>
             </div>
-        `;
-        contenedor.innerHTML += negocioHTML;
-    });
-    
-    // Actualizar contadores
-    if (contador) {
-        contador.textContent = `${totalSeleccionados} seleccionados`;
-        contador.style.background = totalSeleccionados > 0 ? '#28a745' : '#6c757d';
-    }
-    
-    if (contadorChat) {
-        contadorChat.textContent = totalSeleccionados;
-    }
-    
-    if (contadorGrande) {
-        contadorGrande.textContent = totalSeleccionados;
-    }
-}
+        </section>
 
-// FUNCIONES BÁSICAS
-function toggleNegocio(id) {
-    const negocio = negociosDM.find(n => n.id === id);
-    if (negocio) {
-        negocio.seleccionado = !negocio.seleccionado;
-        cargarNegociosDM();
-    }
-}
-
-function chatearConTodos() {
-    const negociosSeleccionados = negociosDM.filter(n => n.seleccionado);
-    
-    if (negociosSeleccionados.length === 0) {
-        alert("⚠️ Por favor, selecciona al menos un negocio para enviar mensaje.");
-        return;
-    }
-    
-    const mensaje = prompt(`📤 Escribe tu mensaje para ${negociosSeleccionados.length} negocio(s):`, 
-                          "Hola, estoy interesado en sus servicios. ¿Podrían contactarme?");
-    
-    if (mensaje) {
-        // Simular envío a WhatsApp
-        negociosSeleccionados.forEach(negocio => {
-            console.log(`Enviando a ${negocio.nombre} (${negocio.telefono}): ${mensaje}`);
-        });
-        
-        alert(`✅ MENSAJES ENVIADOS\n\n• A ${negociosSeleccionados.length} negocio(s)\n• Ellos te contactarán pronto por WhatsApp\n\n📞 Números contactados:\n${negociosSeleccionados.map(n => `• ${n.nombre}: ${n.telefono}`).join('\n')}`);
-    }
-}
-
-function abrirChatIndividual(idNegocio) {
-    const negocio = negociosDM.find(n => n.id === idNegocio);
-    if (negocio) {
-        const mensaje = prompt(`💬 Escribe tu mensaje para ${negocio.nombre}:`, 
-                              `Hola ${negocio.nombre}, me gustaría saber más sobre ${negocio.categoria.toLowerCase()}.`);
-        if (mensaje) {
-            // Crear enlace de WhatsApp
-            const whatsappLink = `https://wa.me/${negocio.telefono.replace(/\D/g, '')}?text=${encodeURIComponent(mensaje)}`;
+        <!-- SECCIÓN DE NEGOCIOS -->
+        <section class="seccion-negocios-dm">
+            <div class="seccion-header">
+                <h2 class="seccion-titulo">
+                    <i class="fas fa-store"></i> Negocios Disponibles
+                    <small class="seccion-subtitulo">
+                        (<span id="total-negocios">0</span> disponibles)
+                    </small>
+                </h2>
+                <span id="contador-negocios" class="contador-seccion">
+                    0 seleccionados
+                </span>
+            </div>
             
-            // Opción 1: Abrir WhatsApp directamente
-            if (confirm(`¿Quieres enviar este mensaje a ${negocio.nombre} por WhatsApp?\n\n"${mensaje}"`)) {
-                window.open(whatsappLink, '_blank');
-            }
+            <!-- LISTA DE NEGOCIOS -->
+            <div id="lista-negocios-dm" class="lista-negocios-dm">
+                <!-- Los negocios se cargan dinámicamente aquí -->
+            </div>
+        </section>
+
+        <!-- BOTÓN CHATEAR FIJO -->
+        <div class="boton-chatear-fijo">
+            <button onclick="chatearConTodos()" class="btn-chatear-grande">
+                <i class="fas fa-comments"></i>
+                Enviar Mensaje a 
+                <span id="contador-chatear" class="contador-chatear">0</span>
+                negocio(s)
+            </button>
+        </div>
+
+        <!-- MENSAJES RÁPIDOS -->
+        <section class="seccion-rapida">
+            <h3 class="titulo-rapido">
+                <i class="fas fa-bolt"></i> Mensajes Rápidos
+            </h3>
             
-            alert(`✅ Mensaje listo para enviar a ${negocio.nombre}:\n\n"${mensaje}"\n\n📞 WhatsApp: ${negocio.telefono}`);
-        }
-    }
-}
-
-function enviarMensajePredeterminado(tipo = 'disponibilidad') {
-    const mensajes = {
-        disponibilidad: "¿Tienen disponibilidad ahora?",
-        precio: "¿Cuál es su precio?",
-        info: "Me gustaría más información sobre sus servicios/productos."
-    };
-    
-    const mensaje = mensajes[tipo] || "Hola, me gustaría información.";
-    const negociosSeleccionados = negociosDM.filter(n => n.seleccionado);
-    
-    if (negociosSeleccionados.length === 0) {
-        alert("⚠️ Selecciona al menos un negocio primero.");
-        return;
-    }
-    
-    // Enviar a cada negocio seleccionado
-    negociosSeleccionados.forEach(negocio => {
-        const whatsappLink = `https://wa.me/${negocio.telefono.replace(/\D/g, '')}?text=${encodeURIComponent(mensaje)}`;
-        console.log(`Enviando mensaje rápido a ${negocio.nombre}: ${whatsappLink}`);
-    });
-    
-    if (confirm(`¿Enviar este mensaje a ${negociosSeleccionados.length} negocio(s)?\n\n"${mensaje}"`)) {
-        // Abrir el primero en WhatsApp
-        const primerNegocio = negociosSeleccionados[0];
-        if (primerNegocio) {
-            window.open(`https://wa.me/${primerNegocio.telefono.replace(/\D/g, '')}?text=${encodeURIComponent(mensaje)}`, '_blank');
-        }
+            <button onclick="enviarMensajePredeterminado('disponibilidad')" class="btn-rapido btn-rapido-verde">
+                <i class="fas fa-question-circle"></i>
+                "¿Tienen disponibilidad ahora?"
+            </button>
+            
+            <button onclick="enviarMensajePredeterminado('precio')" class="btn-rapido btn-rapido-naranja">
+                <i class="fas fa-tag"></i>
+                "¿Cuál es su precio?"
+            </button>
+            
+            <button onclick="enviarMensajePredeterminado('info')" class="btn-rapido btn-rapido-morado">
+                <i class="fas fa-info-circle"></i>
+                "Me gustaría más información"
+            </button>
+        </section>
         
-        alert(`✅ "${mensaje}"\n\n• Enviado a ${negociosSeleccionados.length} negocio(s)\n• WhatsApp abierto para el primero`);
-    }
-}
-
-// Función para seleccionar/deseleccionar todos
-function toggleTodos() {
-    const todosSeleccionados = negociosDM.every(n => n.seleccionado);
-    negociosDM.forEach(negocio => {
-        negocio.seleccionado = !todosSeleccionados;
-    });
-    cargarNegociosDM();
-}
-    </script>
+        <!-- INSTRUCCIONES -->
+        <section class="instrucciones-dm">
+            <h4 class="titulo-instrucciones">
+                <i class="fas fa-lightbulb"></i> ¿Cómo funciona?
+            </h4>
+            <ol class="lista-instrucciones">
+                <li>Selecciona los negocios con los que quieres contactar</li>
+                <li>Escribe tu mensaje o usa uno de los mensajes rápidos</li>
+                <li>Los negocios recibirán tu mensaje por WhatsApp</li>
+                <li>Ellos te contactarán directamente</li>
+            </ol>
+        </section>
+        
+    </main>
 
     <!-- MENÚ INFERIOR -->
     <nav class="menu-inferior">
@@ -442,40 +132,632 @@ function toggleTodos() {
         <a href="dm.html" class="menu-item menu-activo">
             <i class="fas fa-comment-dots"></i>
             <span>DM</span>
-            <span id="dm-icono" class="dm-notificacion" style="
-                background: #6a11cb;
-                color: white;
-                border-radius: 50%;
-                width: 20px;
-                height: 20px;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 12px;
-                margin-left: 5px;
-            ">💬</span>
+            <span id="dm-icono" class="dm-notificacion">💬</span>
         </a>
         
         <a href="alertas.html" class="menu-item">
             <i class="fas fa-bell"></i>
             <span>Alertas</span>
-            <span id="alertas-icono" style="
-                color: #ff9800;
-                font-size: 10px;
-                margin-left: 5px;
-            ">🔔</span>
         </a>
         
         <a href="cuenta.html" class="menu-item">
             <i class="fas fa-user"></i>
             <span>Cuenta</span>
-            <span id="cuenta-icono" style="
-                color: #28a745;
-                font-size: 10px;
-                margin-left: 5px;
-            ">👤</span>
         </a>
     </nav>
 
+    <!-- SCRIPTS -->
+    <script src="negocios.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- SCRIPT DE DM -->
+    <script>
+    // Array de negocios (se carga desde negocios.js)
+    let negociosDM = [];
+
+    // CARGAR NEGOCIOS EN LA LISTA
+    function cargarNegociosDM() {
+        // Obtener negocios desde negocios.js
+        if (typeof window.negociosMacas !== 'undefined') {
+            negociosDM = window.negociosMacas.map(negocio => ({
+                id: negocio.id,
+                nombre: negocio.nombre,
+                categoria: negocio.categoria,
+                telefono: negocio.telefono || '',
+                icono: 'fas fa-store',
+                color: '#6a11cb',
+                seleccionado: false,
+                featured: negocio.fundador || false
+            }));
+        } else {
+            // Datos de ejemplo si no hay negocios.js
+            negociosDM = [
+                {
+                    id: 1,
+                    nombre: "Zapatería Colombiano",
+                    categoria: "Reparación de Calzado",
+                    telefono: "0981342236",
+                    icono: "fas fa-shoe-prints",
+                    color: "#28a745",
+                    seleccionado: false,
+                    featured: true
+                },
+                {
+                    id: 2,
+                    nombre: "Restaurante El Sabor de Macas",
+                    categoria: "Restaurante",
+                    telefono: "0912345678",
+                    icono: "fas fa-utensils",
+                    color: "#dc3545",
+                    seleccionado: false,
+                    featured: false
+                },
+                {
+                    id: 3,
+                    nombre: "Farmacia Santa Marianita",
+                    categoria: "Farmacia",
+                    telefono: "0923456789",
+                    icono: "fas fa-pills",
+                    color: "#007bff",
+                    seleccionado: false,
+                    featured: false
+                }
+            ];
+        }
+        
+        const contenedor = document.getElementById('lista-negocios-dm');
+        const contador = document.getElementById('contador-negocios');
+        const contadorChat = document.getElementById('contador-chatear');
+        const contadorGrande = document.getElementById('contador-chatear-grande');
+        const totalNegocios = document.getElementById('total-negocios');
+        
+        if (!contenedor) return;
+        
+        contenedor.innerHTML = '';
+        let totalSeleccionados = 0;
+        
+        // Actualizar total
+        if (totalNegocios) {
+            totalNegocios.textContent = negociosDM.length;
+        }
+        
+        negociosDM.forEach(negocio => {
+            totalSeleccionados += negocio.seleccionado ? 1 : 0;
+            
+            const negocioHTML = `
+                <div class="tarjeta-negocio-dm" data-id="${negocio.id}">
+                    <div class="dm-negocio-content">
+                        <input type="checkbox" 
+                               id="negocio-${negocio.id}" 
+                               ${negocio.seleccionado ? 'checked' : ''}
+                               onchange="toggleNegocio(${negocio.id})"
+                               class="dm-checkbox">
+                        
+                        <div class="dm-icono" style="background: ${negocio.color}20; color: ${negocio.color}">
+                            <i class="${negocio.icono}"></i>
+                        </div>
+                        
+                        <div class="dm-info">
+                            <h3 class="dm-nombre">
+                                ${negocio.nombre}
+                                ${negocio.featured ? '<span class="dm-badge">⭐</span>' : ''}
+                            </h3>
+                            <p class="dm-categoria">
+                                <i class="fas fa-tag"></i> ${negocio.categoria}
+                            </p>
+                            <p class="dm-telefono">
+                                <i class="fas fa-phone"></i> ${negocio.telefono || 'Sin teléfono'}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="dm-acciones">
+                        <button onclick="abrirChatIndividual(${negocio.id})" class="btn-chatear-individual">
+                            <i class="fas fa-comment"></i> Chatear
+                        </button>
+                    </div>
+                </div>
+            `;
+            contenedor.innerHTML += negocioHTML;
+        });
+        
+        // Actualizar contadores
+        if (contador) {
+            contador.textContent = `${totalSeleccionados} seleccionados`;
+            contador.style.background = totalSeleccionados > 0 ? '#28a745' : '#6c757d';
+        }
+        
+        if (contadorChat) {
+            contadorChat.textContent = totalSeleccionados;
+        }
+        
+        if (contadorGrande) {
+            contadorGrande.textContent = totalSeleccionados;
+        }
+    }
+
+    // FUNCIONES BÁSICAS
+    function toggleNegocio(id) {
+        const negocio = negociosDM.find(n => n.id === id);
+        if (negocio) {
+            negocio.seleccionado = !negocio.seleccionado;
+            cargarNegociosDM();
+        }
+    }
+
+    function chatearConTodos() {
+        const negociosSeleccionados = negociosDM.filter(n => n.seleccionado);
+        
+        if (negociosSeleccionados.length === 0) {
+            alert("⚠️ Por favor, selecciona al menos un negocio para enviar mensaje.");
+            return;
+        }
+        
+        const mensaje = prompt(`📤 Escribe tu mensaje para ${negociosSeleccionados.length} negocio(s):`, 
+                              "Hola, estoy interesado en sus servicios. ¿Podrían contactarme?");
+        
+        if (mensaje) {
+            // Simular envío a WhatsApp
+            negociosSeleccionados.forEach(negocio => {
+                console.log(`Enviando a ${negocio.nombre} (${negocio.telefono}): ${mensaje}`);
+            });
+            
+            // Abrir WhatsApp con el primer negocio
+            const primerNegocio = negociosSeleccionados[0];
+            if (primerNegocio.telefono) {
+                const whatsappLink = `https://wa.me/593${primerNegocio.telefono.replace(/\D/g, '')}?text=${encodeURIComponent(mensaje)}`;
+                window.open(whatsappLink, '_blank');
+            }
+            
+            alert(`✅ MENSAJES ENVIADOS\n\n• A ${negociosSeleccionados.length} negocio(s)\n• Ellos te contactarán pronto por WhatsApp`);
+        }
+    }
+
+    function abrirChatIndividual(idNegocio) {
+        const negocio = negociosDM.find(n => n.id === idNegocio);
+        if (negocio) {
+            const mensaje = prompt(`💬 Escribe tu mensaje para ${negocio.nombre}:`, 
+                                  `Hola ${negocio.nombre}, me gustaría saber más sobre ${negocio.categoria.toLowerCase()}.`);
+            if (mensaje && negocio.telefono) {
+                const whatsappLink = `https://wa.me/593${negocio.telefono.replace(/\D/g, '')}?text=${encodeURIComponent(mensaje)}`;
+                
+                if (confirm(`¿Enviar mensaje a ${negocio.nombre}?`)) {
+                    window.open(whatsappLink, '_blank');
+                }
+            }
+        }
+    }
+
+    function enviarMensajePredeterminado(tipo = 'disponibilidad') {
+        const mensajes = {
+            disponibilidad: "¿Tienen disponibilidad ahora?",
+            precio: "¿Cuál es su precio?",
+            info: "Me gustaría más información sobre sus servicios/productos."
+        };
+        
+        const mensaje = mensajes[tipo] || "Hola, me gustaría información.";
+        const negociosSeleccionados = negociosDM.filter(n => n.seleccionado);
+        
+        if (negociosSeleccionados.length === 0) {
+            alert("⚠️ Selecciona al menos un negocio primero.");
+            return;
+        }
+        
+        // Abrir WhatsApp con el primer negocio seleccionado
+        const primerNegocio = negociosSeleccionados[0];
+        if (primerNegocio.telefono) {
+            const whatsappLink = `https://wa.me/593${primerNegocio.telefono.replace(/\D/g, '')}?text=${encodeURIComponent(mensaje)}`;
+            window.open(whatsappLink, '_blank');
+        }
+        
+        alert(`✅ Mensaje enviado a ${negociosSeleccionados.length} negocio(s)`);
+    }
+
+    // Cargar negocios al iniciar
+    document.addEventListener('DOMContentLoaded', function() {
+        cargarNegociosDM();
+    });
+    </script>
+
+    <!-- ESTILOS ESPECÍFICOS PARA DM -->
+    <style>
+    /* HERO SECTION */
+    .hero-dm {
+        background: linear-gradient(135deg, #f8f9ff, #eef2ff);
+        border-radius: var(--radio-large);
+        padding: 30px 20px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .hero-icon {
+        font-size: 80px;
+        color: #6a11cb;
+        margin-bottom: 15px;
+    }
+    
+    .hero-title {
+        color: var(--texto-oscuro);
+        margin-bottom: 10px;
+        font-size: 28px;
+    }
+    
+    .hero-subtitle {
+        color: var(--texto-claro);
+        margin-bottom: 25px;
+        font-size: 18px;
+        line-height: 1.4;
+    }
+    
+    .btn-hero {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: white;
+        border: none;
+        padding: 20px 40px;
+        border-radius: 50px;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 20px 0;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
+        transition: all 0.3s ease;
+    }
+    
+    .btn-hero:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 30px rgba(106, 17, 203, 0.5);
+    }
+    
+    .contador-hero {
+        background: white;
+        color: #6a11cb;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 10px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    
+    .hero-info {
+        color: var(--texto-claro);
+        font-size: 14px;
+        margin-top: 15px;
+    }
+    
+    /* SECCIÓN NEGOCIOS */
+    .seccion-negocios-dm {
+        margin-bottom: 40px;
+    }
+    
+    .seccion-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .seccion-titulo {
+        color: var(--texto-oscuro);
+        margin: 0;
+        font-size: 22px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .seccion-subtitulo {
+        font-size: 14px;
+        color: var(--texto-claro);
+        margin-left: 10px;
+        font-weight: normal;
+    }
+    
+    .contador-seccion {
+        background: var(--gris-oscuro);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    
+    /* LISTA DE NEGOCIOS DM */
+    .lista-negocios-dm {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .tarjeta-negocio-dm {
+        background: var(--blanco);
+        border-radius: var(--radio-medium);
+        padding: 20px;
+        box-shadow: var(--sombra-suave);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.3s ease;
+        border-left: 5px solid #6a11cb;
+    }
+    
+    .tarjeta-negocio-dm:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--sombra-media);
+    }
+    
+    .dm-negocio-content {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex: 1;
+    }
+    
+    .dm-checkbox {
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+        accent-color: #6a11cb;
+    }
+    
+    .dm-icono {
+        width: 55px;
+        height: 55px;
+        border-radius: var(--radio-medium);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+    }
+    
+    .dm-info {
+        flex: 1;
+    }
+    
+    .dm-nombre {
+        margin: 0;
+        color: var(--texto-oscuro);
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .dm-badge {
+        background: #ffd700;
+        color: #333;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .dm-categoria {
+        margin: 5px 0;
+        color: var(--texto-claro);
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .dm-telefono {
+        margin: 0;
+        color: var(--texto-claro);
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .dm-acciones {
+        text-align: right;
+    }
+    
+    .btn-chatear-individual {
+        background: #6a11cb;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-chatear-individual:hover {
+        opacity: 0.9;
+        transform: scale(1.05);
+    }
+    
+    /* BOTÓN CHATEAR FIJO */
+    .boton-chatear-fijo {
+        margin: 30px 0;
+        text-align: center;
+    }
+    
+    .btn-chatear-grande {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: white;
+        border: none;
+        padding: 18px 40px;
+        border-radius: var(--radio-medium);
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 8px 25px rgba(106, 17, 203, 0.4);
+        transition: all 0.3s ease;
+        width: 100%;
+        max-width: 400px;
+        justify-content: center;
+    }
+    
+    .btn-chatear-grande:hover {
+        transform: scale(1.05);
+    }
+    
+    .contador-chatear {
+        background: white;
+        color: #6a11cb;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 10px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    
+    /* MENSAJES RÁPIDOS */
+    .seccion-rapida {
+        background: #f8f9ff;
+        padding: 25px;
+        border-radius: var(--radio-medium);
+        border: 2px dashed #6a11cb;
+        margin-bottom: 40px;
+    }
+    
+    .titulo-rapido {
+        color: #6a11cb;
+        margin-bottom: 20px;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .btn-rapido {
+        color: white;
+        border: none;
+        padding: 15px 20px;
+        border-radius: var(--radio-small);
+        font-size: 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 10px 0;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-rapido:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .btn-rapido-verde {
+        background: var(--verde-macas);
+    }
+    
+    .btn-rapido-naranja {
+        background: #ff9800;
+    }
+    
+    .btn-rapido-morado {
+        background: #6a11cb;
+    }
+    
+    /* INSTRUCCIONES */
+    .instrucciones-dm {
+        background: #fff8e1;
+        padding: 20px;
+        border-radius: var(--radio-medium);
+        border-left: 5px solid #ff9800;
+        margin-top: 40px;
+    }
+    
+    .titulo-instrucciones {
+        color: #ff9800;
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .lista-instrucciones {
+        color: var(--texto-oscuro);
+        margin-bottom: 0;
+        padding-left: 20px;
+    }
+    
+    .lista-instrucciones li {
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 24px;
+        }
+        
+        .hero-subtitle {
+            font-size: 16px;
+        }
+        
+        .btn-hero {
+            padding: 15px 30px;
+            font-size: 18px;
+        }
+        
+        .tarjeta-negocio-dm {
+            flex-direction: column;
+            gap: 15px;
+            align-items: stretch;
+        }
+        
+        .dm-negocio-content {
+            width: 100%;
+        }
+        
+        .dm-acciones {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn-chatear-individual {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .btn-chatear-grande {
+            font-size: 18px;
+            padding: 15px 30px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .hero-icon {
+            font-size: 60px;
+        }
+        
+        .seccion-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .contador-seccion {
+            align-self: flex-start;
+        }
+    }
+    </style>
 </body>
 </html>
